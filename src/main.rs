@@ -13,3 +13,19 @@ pub enum GameState {
     InGame,
     GameOver,
 }
+
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PieceColor {
+    White,
+    Black,
+}
+
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PieceType {
+    Pawn,
+    Rook,
+    Knight,
+    Bishop,
+    Queen,
+    King,
+}
