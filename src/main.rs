@@ -225,3 +225,23 @@ pub struct ChessMeshes {
     pub square: Handle<Mesh>,
 }
 
+#[derive(Resource)]
+pub struct CameraController {
+    pub distance: f32,
+    pub angle_x: f32,
+    pub angle_y: f32,
+    pub target: Vec3,
+    pub is_white_perspective: bool,
+}
+
+impl Default for CameraController {
+    fn default() -> Self {
+        Self {
+            distance: 12.0,
+            angle_x: -45.0,
+            angle_y: 0.0,
+            target: Vec3::ZERO,
+            is_white_perspective: true,
+        }
+    }
+}
