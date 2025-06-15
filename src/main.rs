@@ -245,3 +245,23 @@ impl Default for CameraController {
         }
     }
 }
+
+#[derive(Resource, Default)]
+pub struct UIState {
+    pub show_main_menu: bool,
+    pub show_game_ui: bool,
+    pub show_connection_dialog: bool,
+    pub server_address: String,
+    pub player_name: String,
+    pub status_message: String,
+    pub connection_status: ConnectionStatus,
+}
+
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub enum ConnectionStatus {
+    #[default]
+    Disconnectd,
+    Connecting,
+    Connected,
+    InGame,
+}
