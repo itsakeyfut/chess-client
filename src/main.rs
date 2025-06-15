@@ -201,3 +201,27 @@ pub struct SendNetworkMessageEvent {
 pub struct NetworkResponseEvent {
     pub response: ServerResponse,
 }
+
+#[derive(Resource)]
+pub struct ChessMaterials {
+    pub white_piece: Handle<StandardMaterial>,
+    pub black_piece: Handle<StandardMaterial>,
+    pub light_square: Handle<StandardMaterial>,
+    pub dark_square: Handle<StandardMaterial>,
+    pub selected_material: Handle<StandardMaterial>,
+    pub legal_move_material: Handle<StandardMaterial>,
+    pub last_move_material: Handle<StandardMaterial>,
+    pub check_material: Handle<StandardMaterial>,
+}
+
+#[derive(Resource)]
+pub struct ChessMeshes {
+    pub pawn: Handle<Mesh>,
+    pub rook: Handle<Mesh>,
+    pub knight: Handle<Mesh>,
+    pub bishop: Handle<Mesh>,
+    pub queen: Handle<Mesh>,
+    pub king: Handle<Mesh>,
+    pub square: Handle<Mesh>,
+}
+
