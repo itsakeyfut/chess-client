@@ -159,3 +159,45 @@ impl ChessGame {
         };
     }
 }
+
+#[derive(Debug, Clone)]
+pub enum NetworkMessage {
+    Connect { player_name: String },
+    CreateGame,
+    JoinGame { game_id: String },
+    MakeMove { from: BoardPosition, to: BoardPosition },
+    Disconnect,
+}
+
+#[derive(Debug, Clone)]
+pub enum ServerResponse {
+    Connected { player_id: String },
+    GameCreated { game_id: String },
+    GameJoined { game_id: String },
+    MoveUpdate { from: BoardPosition, to: BoardPosition },
+    GameState { fen: String },
+    Error { message: String },
+}
+
+#[derive(Event)]
+pub struct PieceSelectedEvent {
+    pub entity: Entity,
+    pub position: BoardPosition,
+}
+
+#[derive(Event)]
+pub struct MovePieceEvent {
+    pub from: BoardPosition,
+    pub to: BoardPosition,
+}
+
+#[derive(Event)]
+pub struct SendNetworkMessageEvent {
+    pub message: NetworkMessage,
+}
+
+#[derive(Event)]
+
+pub struct NetworkResponseEvent {
+    pub response: ServerResponse,
+}
