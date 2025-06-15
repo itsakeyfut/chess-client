@@ -86,3 +86,76 @@ impl BoardPosition {
         Self::new(file, rank)
     }
 }
+
+#[derive(Component)]
+pub struct ChessPiece {
+    pub piece_type: PieceType,
+    pub color: PieceColor,
+    pub position: BoardPosition,
+    pub has_moved: bool,
+}
+
+#[derive(Component)]
+pub struct BoardSquare {
+    pub position: BoardPosition,
+    pub is_light: bool,
+}
+
+#[derive(Component)]
+pub struct Selected;
+
+#[derive(Component)]
+pub struct Highlighted {
+    pub highlight_type: HighlightType,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub enum HighlightType {
+    Selected,
+    LegalMove,
+    LastMove,
+    Check,
+}
+
+#[derive(Resource, Default)]
+pub struct ChessGame {
+    pub board: [[Option<Entity>; 8]; 8],
+    pub current_player: PieceColor,
+    pub selected_piece: Option<Entity>,
+    pub legal_moves: Vec<BoardPosition>,
+    pub game_over: bool,
+    pub last_move: Option<(BoardPosition, BoardPosition)>,
+}
+
+impl ChessGame {
+    pub fn new() -> Self {
+        Self {
+            board: [[None; 8]; 8],
+            current_player: PieceColor::White,
+            selected_piece: None,
+            legal_moves: Vec::new(),
+            game_over: false,
+            last_move: None,
+        }
+    }
+
+    pub fn get_piece_at(&self, pos: BoardPosition) -> Option<Entity> {
+        self.board[pos.rank as usize][pos.file as usize]
+    }
+
+    pub fn set_piece_at(&mut self, pos: BoardPosition, entity: Option<Entity>) {
+        self.board[pos.rank as usize][pos.file as usize] = entity;
+    }
+
+    pub fn move_piece(&mut self, from: BoardPosition, to: BoardPosition) {
+        let piece = self.get_piece_at(from);
+        self.set_piece_at(from, None);
+        self.set_piece_at(to, piece);
+        self.last_move = Some((from, to));
+
+        self.current_player = match self.current_player {
+            PieceColor::White => PieceColor::Black,
+            PieceColor::Black => PieceColor::White,
+        };
+    }
+}
