@@ -229,3 +229,24 @@ impl StateTransitions {
         network_state.set(NetworkState::Error);
     }
 }
+
+#[cfg(debug_assertions)]
+pub fn debug_state_changes(
+    current_game_state: Res<State<GameState>>,
+    current_network_state: Res<State<NetworkState>>,
+    current_input_state: Res<State<InputState>>,
+    current_audio_state: Res<State<AudioState>>,
+) {
+    if current_game_state.is_changed() {
+        debug!("GameState changed to: {:?}", current_game_state.get());
+    }
+    if current_network_state.is_changed() {
+        debug!("NetworkState changed to: {:?}", current_network_state.get());
+    }
+    if current_input_state.is_changed() {
+        debug!("InputState changed to: {:?}", current_input_state.get());
+    }
+    if current_audio_state.is_changed() {
+        debug!("AudioState changed to: {:?}", current_audio_state.get());
+    }
+}
