@@ -81,3 +81,17 @@ impl GameState {
         matches!(self, GameState::Connecting | GameState::Lobby | GameState::InGame)
     }
 }
+
+impl NetworkState {
+    pub fn is_connected(&self) -> bool {
+        matches!(self, NetworkState::Connected | NetworkState::Authenticated | NetworkState::InGame)
+    }
+
+    pub fn can_start_game(&self) -> bool {
+        matches!(self, NetworkState::Authenticated)
+    }
+
+    pub fn is_error(&self) -> bool {
+        matches!(self, NetworkState::Error)
+    }
+}
