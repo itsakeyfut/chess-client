@@ -109,3 +109,17 @@ impl UIState {
         matches!(self, UIState::InGameUI)
     }
 }
+
+impl InputState {
+    pub fn game_input_enabled(&self) -> bool {
+        matches!(self, InputState::Game | InputState::Camera)
+    }
+
+    pub fn menu_input_enabled(&self) -> bool {
+        matches!(self, InputState::Menu)
+    }
+
+    pub fn camera_enabled(&self) -> bool {
+        matches!(self, InputState::Camera | InputState::Game)
+    }
+}
