@@ -63,3 +63,21 @@ pub enum GraphicsState {
     High,
     Ultra,
 }
+
+impl GameState {
+    pub fn is_in_game(&self) -> bool {
+        matches!(self, GameState::InGame | GameState::Paused)
+    }
+
+    pub fn is_menu(&self) -> bool {
+        matches!(self, GameState::MainMenu | GameState::Settings | GameState::Lobby)
+    }
+
+    pub fn can_pause(&self) -> bool {
+        matches!(self, GameState::InGame)
+    }
+
+    pub fn requires_network(&self) -> bool {
+        matches!(self, GameState::Connecting | GameState::Lobby | GameState::InGame)
+    }
+}
