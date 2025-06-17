@@ -48,7 +48,7 @@ pub enum InputState {
 #[derive(Debug, Clone, Copy, Default, Eq, PartialEq, Hash, States)]
 pub enum AudioState {
     #[default]
-    Manu,
+    Menu,
     Game,
     Victory,
     Defeat,
@@ -159,5 +159,73 @@ impl GraphicsState {
             GraphicsState::High => 1.0,
             GraphicsState::Ultra => 1.5,
         }
+    }
+}
+
+pub struct StateTransitions;
+
+impl StateTransitions {
+    pub fn start_game(
+        game_state: &mut ResMut<NextState<GameState>>,
+        network_state: &mut ResMut<NextState<NetworkState>>,
+        input_state: &mut ResMut<NextState<InputState>>,
+        audio_state: &mut ResMut<NextState<AudioState>>,
+    ) {
+        game_state.set(GameState::InGame);
+        network_state.set(NetworkState::InGame);
+        input_state.set(InputState::Game);
+        audio_state.set(AudioState::Game);
+    }
+
+    pub fn return_to_menu(
+        game_state: &mut ResMut<NextState<GameState>>,
+        network_state: &mut ResMut<NextState<NetworkState>>,
+        input_state: &mut ResMut<NextState<InputState>>,
+        audio_state: &mut ResMut<NextState<AudioState>>,
+    ) {
+        game_state.set(GameState::MainMenu);
+        network_state.set(NetworkState::Disconnected);
+        input_state.set(InputState::Menu);
+        audio_state.set(AudioState::Menu);
+    }
+
+    pub fn pause_game(
+        game_state: &mut ResMut<NextState<GameState>>,
+        input_state: &mut ResMut<NextState<InputState>>,
+    ) {
+        game_state.set(GameState::Paused);
+        input_state.set(InputState::Menu);
+    }
+
+    pub fn resume_game(
+        game_state: &mut ResMut<NextState<GameState>>,
+        input_state: &mut ResMut<NextState<InputState>>,
+    ) {
+        game_state.set(GameState::InGame);
+        input_state.set(InputState::Game);
+    }
+
+    pub fn start_connecting(
+        game_state: &mut ResMut<NextState<GameState>>,
+        network_state: &mut ResMut<NextState<NetworkState>>,
+    ) {
+        game_state.set(GameState::Connecting);
+        network_state.set(NetworkState::Connecting);
+    }
+
+    pub fn connection_successful(
+        game_state: &mut ResMut<NextState<GameState>>,
+        network_state: &mut ResMut<NextState<NetworkState>>,
+    ) {
+        game_state.set(GameState::Lobby);
+        network_state.set(NetworkState::Authenticated);
+    }
+
+    pub fn connection_error(
+        game_state: &mut ResMut<NextState<GameState>>,
+        network_state: &mut ResMut<NextState<NetworkState>>,
+    ) {
+        game_state.set(GameState::MainMenu);
+        network_state.set(NetworkState::Error);
     }
 }
