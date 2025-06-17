@@ -95,3 +95,17 @@ impl NetworkState {
         matches!(self, NetworkState::Error)
     }
 }
+
+impl UIState {
+    pub fn is_fullscreen(&self) -> bool {
+        matches!(self, UIState::MainMenu | UIState::Settings | UIState::GameLobby)
+    }
+
+    pub fn is_overlay(&self) -> bool {
+        matches!(self, UIState::PauseMenu | UIState::ConnectionDialog | UIState::ErrorDialog | UIState::ConfirmDialog)
+    }
+
+    pub fn is_game_ui(&self) -> bool {
+        matches!(self, UIState::InGameUI)
+    }
+}
