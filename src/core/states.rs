@@ -123,3 +123,41 @@ impl InputState {
         matches!(self, InputState::Camera | InputState::Game)
     }
 }
+
+impl GraphicsState {
+    pub fn msaa_samples(&self) -> u32 {
+        match self {
+            GraphicsState::Low => 1,
+            GraphicsState::Medium => 2,
+            GraphicsState::High => 3,
+            GraphicsState::Ultra => 8,
+        }
+    }
+
+    pub fn shadow_quality(&self) -> f32 {
+        match self {
+            GraphicsState::Low => 0.5,
+            GraphicsState::Medium => 1.0,
+            GraphicsState::High => 1.5,
+            GraphicsState::Ultra => 2.0,
+        }
+    }
+
+    pub fn lighting_quality(&self) -> f32 {
+        match self {
+            GraphicsState::Low => 0.7,
+            GraphicsState::Medium => 1.0,
+            GraphicsState::High => 1.3,
+            GraphicsState::Ultra => 1.5,
+        }
+    }
+
+    pub fn particle_density(&self) -> f32 {
+        match self {
+            GraphicsState::Low => 0.3,
+            GraphicsState::Medium => 0.6,
+            GraphicsState::High => 1.0,
+            GraphicsState::Ultra => 1.5,
+        }
+    }
+}
