@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{platform::collections::HashMap, prelude::*};
 
 #[derive(Resource)]
 pub struct GameSettings {
@@ -306,4 +306,15 @@ impl AudioSettings {
             Some(self.sfx_queue.remove(0))
         }
     }
+}
+
+#[derive(Resource, Default)]
+pub struct PerformanceStats {
+    pub fps: f32,
+    pub frame_count: u32,
+    pub total_time: f32,
+    pub memory_usage_mb: f32,
+    pub draw_calls: u32,
+    pub entities_count: u32,
+    pub systems_time: HashMap<String, f32>,
 }
