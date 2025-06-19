@@ -277,3 +277,33 @@ impl Default for AudioSettings {
         }
     }
 }
+
+impl AudioSettings {
+    pub fn get_effective_master_volume(&self) -> f32 {
+        if self.sound_enabled {
+            self.master_volume * self.sfx_volume
+        } else {
+            0.0
+        }
+    }
+
+    pub fn get_effective_music_volume(&self) -> f32 {
+        if self.music_enabled {
+            self.master_volume * self.music_volume
+        } else {
+            0.0
+        }
+    }
+
+    pub fn queue_sfx(&mut self, sound_name: String) {
+        self.sfx_queue.push(sound_name);
+    }
+
+    pub fn dequeue_sfx(&mut self) -> Option<String> {
+        if self.sfx_queue.is_empty() {
+            None
+        } else {
+            Some(self.sfx_queue.remove(0))
+        }
+    }
+}
