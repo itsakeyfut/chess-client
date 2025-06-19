@@ -52,6 +52,43 @@ pub struct UIState {
     pub show_performance_info: bool,
     pub modal_open: bool,
     pub tooltip_text: Option<String>,
-    pub status_message: Option<String>,
+    pub status_message: String,
     pub last_error: Option<String>,
+}
+
+impl UIState {
+    pub fn is_screen_active(&self, screen: crate::core::states::UIState) -> bool {
+        self.active_ui_screens.contains(&screen)
+    }
+
+    pub fn show_screen(&mut self, screen: crate::core::states::UIState) {
+        if !self.active_ui_screens.contains(&screen) {
+            self.active_ui_screens.push(screen);
+        }
+    }
+
+    pub fn hide_screen(&mut self, screen: crate::core::states::UIState) {
+        self.active_ui_screens.retain(|&s| s != screen);
+    }
+
+    pub fn clear_all_screens(&mut self) {
+        self.active_ui_screens.clear();
+    }
+
+    pub fn has_modal(&self) -> bool {
+        self.modal_open || self.active_ui_screens.iter().any(|s| s.is_overlay())
+    }
+
+    pub fn set_status(&mut self, message: String) {
+        self.status_message = message;
+    }
+
+    pub fn set_error(&mut self, error: String) {
+        self.last_error = Some(error.clone());
+        self.status_message = format!("Error: {}", error);
+    }
+
+    pub fn clear_error(&mut self) {
+        self.last_error = None;
+    }
 }
