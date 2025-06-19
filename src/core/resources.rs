@@ -263,3 +263,17 @@ pub struct AudioSettings {
     pub current_bgm: Option<String>,
     pub sfx_queue: Vec<String>,
 }
+
+impl Default for AudioSettings {
+    fn default() -> Self {
+        Self {
+            master_volume: 0.8,
+            sfx_volume: 0.7,
+            music_volume: 0.5,
+            sound_enabled: true,
+            music_enabled: true,
+            current_bgm: None,
+            sfx_queue: Vec::new(),
+        }
+    }
+}
