@@ -252,3 +252,14 @@ impl NetworkState {
         !self.is_reconnecting
     }
 }
+
+#[derive(Resource)]
+pub struct AudioSettings {
+    pub master_volume: f32,
+    pub sfx_volume: f32,
+    pub music_volume: f32,
+    pub sound_enabled: bool,
+    pub music_enabled: bool,
+    pub current_bgm: Option<String>,
+    pub sfx_queue: Vec<String>,
+}
