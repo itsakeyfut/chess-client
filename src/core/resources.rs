@@ -395,3 +395,22 @@ impl InputSettings {
         }
     }
 }
+
+#[derive(Resource)]
+pub struct DebugInfo {
+    pub show_debug_overlay: bool,
+    pub show_wireframe: bool,
+    pub show_collision_boxes: bool,
+    pub show_performance_graph: bool,
+    pub log_level: LogLevel,
+    pub debug_camera_active: bool,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum LogLevel {
+    Error,
+    Warn,
+    Info,
+    Debug,
+    Trace,
+}
