@@ -347,3 +347,28 @@ pub struct InputSettings {
     pub invert_mouse_y: bool,
     pub key_bindings: HashMap<String, Vec<KeyCode>>,
 }
+
+impl Default for InputSettings {
+    fn default() -> Self {
+        let mut key_bindings = HashMap::new();
+
+        key_bindings.insert("pause".to_string(), vec![KeyCode::Escape]);
+        key_bindings.insert("camera_reset".to_string(), vec![KeyCode::Space]);
+        key_bindings.insert("rotate_board".to_string(), vec![KeyCode::KeyR]);
+        key_bindings.insert("undo".to_string(), vec![KeyCode::KeyZ]);
+        key_bindings.insert("redo".to_string(), vec![KeyCode::KeyY]);
+        key_bindings.insert("toggle_ui".to_string(), vec![KeyCode::Tab]);
+        key_bindings.insert("screenshot".to_string(), vec![KeyCode::F12]);
+        key_bindings.insert("fullscreen".to_string(), vec![KeyCode::F11]);
+
+        Self {
+            mouse_sensitivity: 1.0,
+            keyboard_repeat_delay: 0.5,
+            keyboard_repeat_rate: 0.1,
+            double_click_time: 0.3,
+            draw_threshold: 5.0,
+            invert_mouse_y: false,
+            key_bindings,
+        }
+    }
+}
