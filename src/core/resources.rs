@@ -109,3 +109,23 @@ pub struct CameraController {
     pub auto_rotate: bool,
     pub auto_rotate_speed: f32,
 }
+
+impl Default for CameraController {
+    fn default() -> Self {
+        Self {
+            distance: 12.0,
+            min_distance: 5.0,
+            max_distance: 25.0,
+            angle_x: -45.0,
+            angle_y: 0.0,
+            target: Vec3::ZERO,
+            is_white_perspective: true,
+            smooth_follow: true,
+            follow_speed: 5.0,
+            rotation_speed: 1.0,
+            zoom_speed: 1.0,
+            auto_rotate: true,
+            auto_rotate_speed: 0.1,
+        }
+    }
+}
