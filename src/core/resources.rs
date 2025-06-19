@@ -44,3 +44,14 @@ pub enum GraphicsQuality {
     High,
     Ultra,
 }
+
+#[derive(Resource, Default)]
+pub struct UIState {
+    pub active_ui_screens: Vec<crate::core::states::UIState>,
+    pub show_debug_info: bool,
+    pub show_performance_info: bool,
+    pub modal_open: bool,
+    pub tooltip_text: Option<String>,
+    pub status_message: Option<String>,
+    pub last_error: Option<String>,
+}
