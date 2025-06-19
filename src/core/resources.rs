@@ -318,3 +318,21 @@ pub struct PerformanceStats {
     pub entities_count: u32,
     pub systems_time: HashMap<String, f32>,
 }
+
+impl PerformanceStats {
+    pub fn reset_frame_stats(&mut self) {
+        self.draw_calls = 0;
+    }
+
+    pub fn add_system_time(&mut self, system_name: String, time: f32) {
+        *self.systems_time.entry(system_name).or_insert(0.0) += time;
+    }
+
+    pub fn get_average_frame_time(&self) -> f32 {
+        if self.fps > 0.0 {
+            1000.0 / self.fps
+        } else {
+            0.0
+        }
+    }
+}
