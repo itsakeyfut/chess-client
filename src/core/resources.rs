@@ -336,3 +336,14 @@ impl PerformanceStats {
         }
     }
 }
+
+#[derive(Resource)]
+pub struct InputSettings {
+    pub mouse_sensitivity: f32,
+    pub keyboard_repeat_delay: f32,
+    pub keyboard_repeat_rate: f32,
+    pub double_click_time: f32,
+    pub draw_threshold: f32,
+    pub invert_mouse_y: bool,
+    pub key_bindings: HashMap<String, Vec<KeyCode>>,
+}
