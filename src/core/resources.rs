@@ -92,3 +92,20 @@ impl UIState {
         self.last_error = None;
     }
 }
+
+#[derive(Resource)]
+pub struct CameraController {
+    pub distance: f32,
+    pub min_distance: f32,
+    pub max_distance: f32,
+    pub angle_x: f32,
+    pub angle_y: f32,
+    pub target: Vec3,
+    pub is_white_perspective: bool,
+    pub smooth_follow: bool,
+    pub follow_speed: f32,
+    pub rotation_speed: f32,
+    pub zoom_speed: f32,
+    pub auto_rotate: bool,
+    pub auto_rotate_speed: f32,
+}
