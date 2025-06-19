@@ -414,3 +414,12 @@ pub enum LogLevel {
     Debug,
     Trace,
 }
+
+impl Default for LogLevel {
+    fn default() -> Self {
+        #[cfg(debug_assertions)]
+        return LogLevel::Debug;
+        #[cfg(not(debug_assertions))]
+        return LogLevel::Info;
+    }
+}
