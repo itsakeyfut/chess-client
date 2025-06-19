@@ -129,3 +129,43 @@ impl Default for CameraController {
         }
     }
 }
+
+impl CameraController {
+    pub fn get_camera_position(&self) -> Vec3 {
+        let angle_x_rad = self.angle_x.to_radians();
+        let angle_y_rad = self.angle_y.to_radians();
+
+        let x = self.distance * angle_x_rad.cos() * angle_y_rad.sin();
+        let y = self.distance * angle_x_rad.sin();
+        let z = self.distance * angle_x_rad.cos() * angle_y_rad.cos();
+
+        self.target + Vec3::new(x, y, z)
+    }
+
+    pub fn zoom(&mut self, delta: f32) {
+        self.distance = (self.distance - delta * self.zoom_speed)
+            .clamp(self.min_distance, self.max_distance);
+    }
+
+    pub fn rotate(&mut self, delta_x: f32, delta_y: f32) {
+        self.angle_y += delta_x * self.rotation_speed;
+        self.angle_x = (self.angle_x + delta_y * self.rotation_speed)
+            .clamp(-89.0, 89.0); // Prevent gimbal lock
+    }
+
+    pub fn set_perspective(&mut self, is_white: bool) {
+        self.is_white_perspective = is_white;
+        if is_white {
+            self.angle_y = 0.0;
+        } else {
+            self.angle_y = 180.0;
+        }
+    }
+
+    pub fn reset_to_default(&mut self) {
+        self.distance = 12.0;
+        self.angle_x = -45.0;
+        self.angle_y = if self.is_white_perspective { 0.0 } else { 180.0 };
+        self.target = Vec3::ZERO;
+    }
+}
