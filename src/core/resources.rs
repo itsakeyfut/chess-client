@@ -169,3 +169,29 @@ impl CameraController {
         self.target = Vec3::ZERO;
     }
 }
+
+#[derive(Resource, Default)]
+pub struct NetworkState {
+    pub connection_status: ConnectionStatus,
+    pub server_address: String,
+    pub player_id: Option<String>,
+    pub game_id: Option<String>,
+    pub pind: u32,
+    pub last_ping_time: f32,
+    pub reconnect_attempts: u32,
+    pub max_reconnect_attempts: u32,
+    pub is_reconnecting: bool,
+    pub connection_start_time: f32,
+}
+
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub enum ConnectionStatus {
+    #[default]
+    Disconnected,
+    Connecting,
+    Connected,
+    Authenticated,
+    InGame,
+    Error,
+    Reconnecting,
+}
