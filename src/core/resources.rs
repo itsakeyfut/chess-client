@@ -195,3 +195,60 @@ pub enum ConnectionStatus {
     Error,
     Reconnecting,
 }
+
+impl NetworkState {
+    pub fn is_connected(&self) -> bool {
+        matches!(
+            self.connection_status,
+            ConnectionStatus::Connected | ConnectionStatus::Authenticated | ConnectionStatus::InGame
+        )
+    }
+
+    pub fn can_send_messages(&self) -> bool {
+        matches!(
+            self.connection_status,
+            ConnectionStatus::Authenticated | ConnectionStatus::InGame
+        )
+    }
+
+    pub fn start_connection(&mut self, address: String, time: f32) {
+        self.server_address = address;
+        self.connection_status = ConnectionStatus::Connecting;
+        self.connection_start_time = time;
+        self.reconnect_attempts = 0;
+    }
+
+    pub fn connection_established(&mut self, player_id: String) {
+        self.connection_status = ConnectionStatus::Connected;
+        self.player_id = Some(player_id);
+    }
+
+    pub fn authenticated(&mut self) {
+        self.connection_status = ConnectionStatus::Authenticated;
+    }
+
+    pub fn join_game(&mut self, game_id: String) {
+        self.connection_status = ConnectionStatus::InGame;
+        self.game_id = Some(game_id);
+    }
+
+    pub fn disconenct(&mut self) {
+        self.connection_status = ConnectionStatus::Disconnected;
+        self.player_id = None;
+        self.game_id = None;
+        self.pind = 0;
+        self.reconnect_attempts = 0;
+        self.is_reconnecting = false;
+    }
+
+    pub fn connection_error(&mut self) {
+        self.connection_status = ConnectionStatus::Error;
+        self.reconnect_attempts += 1;
+    }
+
+    pub fn should_reconnect(&self) -> bool {
+        self.connection_status == ConnectionStatus::Error &&
+        self.reconnect_attempts < self.max_reconnect_attempts &&
+        !self.is_reconnecting
+    }
+}
