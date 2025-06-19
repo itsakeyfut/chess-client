@@ -372,3 +372,26 @@ impl Default for InputSettings {
         }
     }
 }
+
+impl InputSettings {
+    pub fn is_key_bound_to_action(&self, key: KeyCode, action: &str) -> bool {
+        self.key_bindings
+            .get(action)
+            .map(|keys| keys.contains(&key))
+            .unwrap_or(false)
+    }
+
+    pub fn get_keys_for_action(&self, action: &str) -> Option<&Vec<KeyCode>> {
+        self.key_bindings.get(action)
+    }
+
+    pub fn bind_key_to_action(&mut self, key: KeyCode, action: String) {
+        self.key_bindings.entry(action).or_insert_with(Vec::new).push(key);
+    }
+
+    pub fn unbind_key_from_action(&mut self, key: KeyCode, action: &str) {
+        if let Some(keys) = self.key_bindings.get_mut(action) {
+            keys.retain(|&k| k != key);
+        }
+    }
+}
