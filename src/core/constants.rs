@@ -201,3 +201,13 @@ pub mod game_rules {
     pub const THREEFOLD_REPETITION_LIMIT: u32 = 3;
     pub const INSUFFICIENT_MATERIAL_PIECES: u32 = 3;
 }
+
+// Debug
+#[cfg(debug_assertions)]
+pub mod debug {
+    pub const SHOW_FPS_BY_DEFAULT: bool = true;
+    pub const SHOW_WIREFRAME_BY_DEFAULT: bool = true;
+    pub const LOG_NETWORK_MESSAGES: bool = true;
+    pub const LOG_PERFORMANCE: bool = true;
+    pub const ENABLE_HOT_RELOAD: bool = true;
+}
