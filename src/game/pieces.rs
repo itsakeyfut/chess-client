@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 use serde::{Deserialize, Serialize};
 
+use crate::game::BoardPosition;
+
 #[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum PieceColor {
     White,
@@ -103,4 +105,14 @@ impl PieceType {
     pub fn can_promote_to(self) -> bool {
         matches!(self, PieceType::Queen | PieceType::Rook | PieceType::Bishop | PieceType::Knight)
     }
+}
+
+#[derive(Component, Debug, Clone)]
+pub struct ChessPiece {
+    pub piece_type: PieceType,
+    pub color: PieceColor,
+    pub position: BoardPosition,
+    pub has_moved: bool,
+    pub move_count: u32,
+    pub last_moved_turn: Option<u32>,
 }
