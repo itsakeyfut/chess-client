@@ -237,3 +237,22 @@ pub const MOUSE_SENSITIVITY_MIN: f32 = 0.1;
 pub const MOUSE_SENSITIVITY_MAX: f32 = 5.0;
 pub const MOUSE_SENSITIVITY_DEFAULT: f32 = 1.0;
 pub const DRAG_THRESHOLD: f32 = 5.0;
+
+pub fn board_position_to_world(file: u8, rank: u8) -> Vec3 {
+    Vec3::new(
+        (file as f32 - 3.5) * SQUARE_SIZE,
+        0.0,
+        (rank as f32 - 3.5) * SQUARE_SIZE,
+    )
+}
+
+pub fn world_to_board_position(world_pos: Vec3) -> Option<(u8, u8)> {
+    let file = ((world_pos.x / SQUARE_SIZE + 3.5).round() as i32).clamp(0, 7) as u8;
+    let rank = ((world_pos.z / SQUARE_SIZE + 3.5).round() as i32).clamp(0, 7) as u8;
+
+    if file < 8 && rank < 8 {
+        Some((file, rank))
+    } else {
+        None
+    }
+}
