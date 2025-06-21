@@ -1,3 +1,5 @@
+use bevy::prelude::*;
+
 // Board
 pub const BOARD_SIZE: f32 = 8.0;
 pub const SQUARE_SIZE: f32 = 1.0;
@@ -36,3 +38,9 @@ pub const CAMERA_SMOOTH_FACTOR: f32 = 5.0;
 pub const AMBIENT_LIGHT_STRENGTH: f32 = 0.3;
 pub const DIRECTIONAL_LIGHT_STRENGTH: f32 = 0.8;
 pub const DIRECTIONAL_LIGHT_ANGLE: f32 = -45.0;
+
+// Material
+pub const WHITE_PIECE_COLOR: Color = Color::srgb(0.95, 0.95, 0.92);
+pub const BLACK_PIECE_COLOR: Color = Color::srgb(0.15, 0.15, 0.15);
+pub const LIGHT_SQUARE_COLOR: Color = Color::srgb(0.93, 0.85, 0.73);
+pub const DARK_SQUARE_COLOR: Color = Color::srgb(0.65, 0.42, 0.24);
