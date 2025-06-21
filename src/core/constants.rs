@@ -177,3 +177,11 @@ pub mod render_layers {
     pub const TOOLTIP: f32 = 15.0;
     pub const DEBUG: f32 = 20.0;
 }
+
+// Physics
+pub mod physics {
+    pub const GRAVITY: f32 = -9.81;
+    pub const PIECE_MASS: f32 = 1.0;
+    pub const BOARD_FRICTION: f32 = 0.7;
+    pub const PIECE_RESTITUTION: f32 = 0.3;
+}
