@@ -97,3 +97,9 @@ pub const DEFAULT_MASTER_VOLUME: f32 = 0.8;
 pub const DEFAULT_SFX_VOLUME: f32 = 0.7;
 pub const DEFAULT_MUSIC_VOLUME: f32 = 0.5;
 pub const AUDIO_FADE_DURATION: f32 = 1.0;
+
+// Performance
+pub const TARGET_FPS: f32 = 60.0;
+pub const LOW_FPS_THRESHOLD: f32 = 30.0;
+pub const HIGH_MEMORY_THRESHOLD_MB: f32 = 1024.0;
+pub const FRAME_TIME_SPIKE_THRESHOLD_MS: f32 = 50.0;
