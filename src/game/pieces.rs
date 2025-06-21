@@ -170,3 +170,8 @@ impl ChessPiece {
         self.last_moved_turn == Some(current_turn - 1)
     }
 }
+
+#[derive(Component)]
+pub struct Selected {
+    pub selected_at: f32,
+}
