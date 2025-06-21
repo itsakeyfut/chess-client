@@ -262,3 +262,20 @@ impl PieceAnimation {
         self.start_position.lerp(self.target_position, t)
     }
 }
+
+#[derive(Component)]
+pub struct PieceEffect {
+    pub effect_type: PieceEffectType,
+    pub intensity: f32,
+    pub start_time: f32,
+    pub duration: Option<f32>,
+}
+
+#[derive(Debug, Clone)]
+pub enum PieceEffectType {
+    Glow { color: Color },
+    Pulse { color: Color, frequency: f32 },
+    Sparkle { particle_count: u32 },
+    Outline { color: Color, thickness: f32 },
+    Shadow { offset: Vec3, opacity: f32 },
+}
