@@ -127,3 +127,40 @@ pub const CONFIG_FILE_PATH: &str = "config/settings.toml";
 pub const SAVE_GAME_DIR: &str = "saves/";
 pub const SCREENSHOT_DIR: &str = "screenshots/";
 pub const LOG_FILE_PATH: &str = "logs/application.log";
+
+// Asset path
+pub mod asset_paths {
+    pub const FONTS_DIR: &str = "fonts/";
+    pub const TEXTURES_DIR: &str = "textures/";
+    pub const MODELS_DIR: &str = "models/";
+    pub const SOUNDS_DIR: &str = "sounds/";
+    pub const MUSIC_DIR: &str = "music/";
+    pub const SHADERS_DIR: &str = "shaders/";
+
+    // Fonts
+    pub const DEFAULT_FONT: &str = "fonts/FiraSans-Bold.ttf";
+    pub const MONO_FONT: &str = "fonts/FiraMono-Medium.ttf";
+
+    // Textures
+    pub const WOOD_TEXTURE: &str = "textures/wood.png";
+    pub const MARBLE_TEXTURE: &str = "textures/marble.png";
+    pub const METAL_TEXTURE: &str = "textures/metal.png";
+
+    // Sounds
+    pub const PIECE_MOVE_SOUND: &str = "sounds/piece_move.ogg";
+    pub const PIECE_CAPTURE_SOUND: &str = "sounds/piece_capture.ogg";
+    pub const CHECK_SOUND: &str = "sounds/check_sound.ogg";
+    pub const CHECKMATE_SOUND: &str = "sounds/checkmate.ogg";
+    pub const DRAW_SOUND: &str = "sounds/draw.ogg";
+    pub const CASTLE_SOUND: &str = "sounds/castle.ogg";
+    pub const PROMOTION_SOUND: &str = "sounds/promotion.ogg";
+    pub const NOTIFICATION_SOUND: &str = "sounds/notification.ogg";
+    pub const ERROR_SOUND: &str = "sounds/error.ogg";
+    pub const BUTTON_CLICK_SOUND: &str = "sounds/button_click.ogg";
+
+    // Music
+    pub const MENU_MUSIC: &str = "music/menu_theme.ogg";
+    pub const GAME_MUSIC: &str = "music/game_theme.ogg";
+    pub const VICTORY_MUSIC: &str = "music/victory.ogg";
+    pub const DEFEAT_MUSIC: &str = "music/defeat.ogg";
+}
