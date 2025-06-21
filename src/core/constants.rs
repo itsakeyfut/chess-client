@@ -103,3 +103,21 @@ pub const TARGET_FPS: f32 = 60.0;
 pub const LOW_FPS_THRESHOLD: f32 = 30.0;
 pub const HIGH_MEMORY_THRESHOLD_MB: f32 = 1024.0;
 pub const FRAME_TIME_SPIKE_THRESHOLD_MS: f32 = 50.0;
+
+// Graphics Quality
+pub mod graphics_quality {
+    pub const LOW_MSAA_SAMPLES: u32 = 1;
+    pub const MEDIUM_MSAA_SAMPLES: u32 = 2;
+    pub const HIGH_MSAA_SAMPLES: u32 = 4;
+    pub const ULTRA_MSAA_SAMPLES: u32 = 8;
+
+    pub const LOW_SHADOW_RESOLUTION: u32 = 512;
+    pub const MEDIUM_SHADOW_RESOLUTION: u32 = 1024;
+    pub const HIGH_SHADOW_RESOLUTION: u32 = 2048;
+    pub const ULTRA_SHADOW_RESOLUTION: u32 = 4096;
+
+    pub const LOW_REFLECTION_RESOLUTION: u32 = 256;
+    pub const MEDIUM_REFLECTION_RESOLUTION: u32 = 512;
+    pub const HIGH_REFLECTION_RESOLUTION: u32 = 1024;
+    pub const ULTRA_REFLECTION_RESOLUTION: u32 = 2048;
+}
