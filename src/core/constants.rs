@@ -257,6 +257,17 @@ pub fn world_to_board_position(world_pos: Vec3) -> Option<(u8, u8)> {
     }
 }
 
+pub fn piece_height_by_type(piece_type: crate::game::pieces::PieceType) -> f32 {
+    match piece_type {
+        crate::game::pieces::PieceType::Pawn => PAWN_HEIGHT,
+        crate::game::pieces::PieceType::Rook => ROOK_HEIGHT,
+        crate::game::pieces::PieceType::Knight => KNIGHT_HEIGHT,
+        crate::game::pieces::PieceType::Bishop => BISHOP_HEIGHT,
+        crate::game::pieces::PieceType::Queen => QUEEN_HEIGHT,
+        crate::game::pieces::PieceType::King => KING_HEIGHT,
+    }
+}
+
 pub fn lerp_color(a: Color, b: Color, t: f32) -> Color {
     let a = a.to_srgba();
     let b = b.to_srgba();
