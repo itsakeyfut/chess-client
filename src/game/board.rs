@@ -157,3 +157,59 @@ impl Default for ChessBoard {
         }
     }
 }
+
+impl ChessBoard {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    pub fn get_piece_at(&self, pos: BoardPosition) -> Option<Entity> {
+        if pos.is_valid() {
+            self.squares[pos.rank as usize][pos.file as usize]
+        } else {
+            None
+        }
+    }
+
+    pub fn set_piece_at(&mut self, pos: BoardPosition, entity: Option<Entity>) {
+        if pos.is_valid() {
+            self.squares[pos.rank as usize][pos.file as usize] = entity;
+        }
+    }
+
+    pub fn move_piece(&mut self, from: BoardPosition, to: BoardPosition) -> Option<Entity> {
+        let captured_piece = self.get_piece_at(to);
+        let moving_piece = self.get_piece_at(from);
+
+        self.set_piece_at(from, None);
+        self.set_piece_at(to, moving_piece);
+
+        captured_piece
+    }
+
+    pub fn is_empty(&self, pos: BoardPosition) -> bool {
+        self.get_piece_at(pos).is_none()
+    }
+
+    pub fn get_square_entity(&self, pos: BoardPosition) -> Option<Entity> {
+        if pos.is_valid() {
+            Some(self.square_entities[pos.rank as usize][pos.file as usize])
+        } else {
+            None
+        }
+    }
+
+    pub fn set_square_entity(&mut self, pos: BoardPosition, entity: Entity) {
+        if pos.is_valid() {
+            self.square_entities[pos.rank as usize][pos.file as usize] = entity;
+        }
+    }
+
+    pub fn flip_board(&mut self) {
+        self.is_flipped = !self.is_flipped
+    }
+
+    pub fn clear(&mut self) {
+        self.squares =  [[None; 8]; 8];
+    }
+}
