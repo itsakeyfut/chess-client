@@ -203,3 +203,62 @@ pub enum EaseFunction {
     EaseOut,
     Bounce,
 }
+
+impl PieceAnimation {
+    pub fn new_move(start_pos: Vec3, target_pos: Vec3, time: f32) -> Self {
+        Self {
+            animation_type: PieceAnimationType::Move,
+            start_time: time,
+            duration: crate::core::constants::PIECE_MOVE_DURATION,
+            start_position: start_pos,
+            target_position: target_pos,
+            ease_function: EaseFunction::EaseOut,
+        }
+    }
+
+    pub fn new_capture(pos: Vec3, time: f32) -> Self {
+        Self {
+            animation_type: PieceAnimationType::Capture,
+            start_time: time,
+            duration: crate::core::constants::PIECE_CAPTURE_DURATION,
+            start_position: pos,
+            target_position: pos + Vec3::new(0.0, -2.0, 0.0),
+            ease_function: EaseFunction::EaseInOut,
+        }
+    }
+
+    pub fn new_hover(original_pos: Vec3, time: f32) -> Self {
+        let hover_pos = original_pos + Vec3::new(0.0, crate::core::constants::PIECE_HOVER_HEIGHT, 0.0);
+        Self {
+            animation_type: PieceAnimationType::Hover,
+            start_time: time,
+            duration: 0.2,
+            start_position: original_pos,
+            target_position: hover_pos,
+            ease_function: EaseFunction::EaseOut,
+        }
+    }
+
+    pub fn is_complete(&self, current_time: f32) -> bool {
+        current_time - self.start_time >= self.duration
+    }
+
+    pub fn progress(&self, current_time: f32) -> f32 {
+        ((current_time - self.start_time) / self.duration).clamp(0.0, 1.0)
+    }
+
+    pub fn eased_progress(&self, current_time: f32) -> f32 {
+        let t = self.progress(current_time);
+        match self.ease_function {
+            EaseFunction::Linear => t,
+            EaseFunction::EaseInOut => crate::core::constants::ease_in_out_cubic(t),
+            EaseFunction::EaseOut => 1.0 - (1.0 - t).powi(3),
+            EaseFunction::Bounce => crate::core::constants::ease_out_bounce(t),
+        }
+    }
+
+    pub fn current_position(&self, current_time: f32) -> Vec3 {
+        let t = self.eased_progress(current_time);
+        self.start_position.lerp(self.target_position, t)
+    }
+}
