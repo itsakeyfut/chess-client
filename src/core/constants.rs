@@ -185,3 +185,12 @@ pub mod physics {
     pub const BOARD_FRICTION: f32 = 0.7;
     pub const PIECE_RESTITUTION: f32 = 0.3;
 }
+
+// Timing
+pub mod timing {
+    pub const DOUBLE_CLICK_TIME: f32 = 0.3;
+    pub const LONG_PRESS_TIME: f32 = 0.8;
+    pub const TOOLTIP_DELAY: f32 = 1.0;
+    pub const AUTO_SAVE_INTERVAL: f32 = 60.0; // 1min
+    pub const PING_TIMEOUT: f32 = 5.0;
+}
