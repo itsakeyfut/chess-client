@@ -17,6 +17,11 @@ pub struct MovePieceEvent {
     pub is_player_move: bool,
 }
 
+#[derive(Event)]
+pub struct SendNetworkMessageEvent {
+    pub message: NetworkMessage,
+}
+
 #[derive(Debug, Clone)]
 pub enum NetworkMessage {
     Connect {
