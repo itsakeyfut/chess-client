@@ -26,3 +26,13 @@ impl PieceColor {
         matches!(self, PieceColor::White)
     }
 }
+
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub enum PieceType {
+    Pawn,
+    Rook,
+    Knight,
+    Bishop,
+    Queen,
+    King,
+}
