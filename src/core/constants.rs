@@ -121,3 +121,9 @@ pub mod graphics_quality {
     pub const HIGH_REFLECTION_RESOLUTION: u32 = 1024;
     pub const ULTRA_REFLECTION_RESOLUTION: u32 = 2048;
 }
+
+// File path
+pub const CONFIG_FILE_PATH: &str = "config/settings.toml";
+pub const SAVE_GAME_DIR: &str = "saves/";
+pub const SCREENSHOT_DIR: &str = "screenshots/";
+pub const LOG_FILE_PATH: &str = "logs/application.log";
