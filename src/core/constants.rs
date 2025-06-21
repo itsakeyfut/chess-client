@@ -268,3 +268,7 @@ pub fn lerp_color(a: Color, b: Color, t: f32) -> Color {
         a.alpha + (b.alpha - a.alpha) * t,
     )
 }
+
+// pub fn lerp_color(a: Color, b: Color, t: f32) -> Color {
+//     a.mix(&b, t)
+// }
