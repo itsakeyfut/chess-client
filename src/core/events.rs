@@ -79,3 +79,24 @@ pub enum GameAction {
     ExportPGN,
     ImportPGN(String),
 }
+
+#[derive(Debug, Clone)]
+pub enum AudioAction {
+    PlaySFX {
+        sound_name: String,
+        volume: Option<f32>,
+    },
+    PlayMusic {
+        music_name: String,
+        loop_music: bool,
+        fade_in: Option<f32>,
+    },
+    StopMusic {
+        fade_out: Option<f32>,
+    },
+    SetMasterVolume(f32),
+    SetSFXVolume(f32),
+    SetMusicVolume(f32),
+    ToggleSound,
+    ToggleMusic,
+}
