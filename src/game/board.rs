@@ -115,4 +115,28 @@ impl BoardPosition {
         let rank_diff = other.rank as i8 - self.rank as i8;
         (file_diff.signum(), rank_diff.signum())
     }
+
+    pub fn positions_between(&self, other: &BoardPosition) -> Vec<BoardPosition> {
+        let mut positions = Vec::new();
+        let (file_dir, rank_dir) = self.direction_to(other);
+
+        if file_dir == 0 && rank_dir == 0 {
+            return positions;
+        }
+
+        let mut curr = *self;
+        loop {
+            if let Some(next) = curr.offset(file_dir, rank_dir) {
+                if next == *other {
+                    break;
+                }
+                positions.push(next);
+                curr = next;
+            } else {
+                break;
+            }
+        }
+
+        positions
+    }
 }
