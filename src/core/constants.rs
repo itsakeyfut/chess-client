@@ -231,3 +231,9 @@ pub const DEFAULT_WINDOW_WIDTH: f32 = 1280.0;
 pub const DEFAULT_WINDOW_HEIGHT: f32 = 720.0;
 pub const MIN_WINDOW_WIDTH: f32 = 800.0;
 pub const MIN_WINDOW_HEIGHT: f32 = 600.0;
+
+// Inputs
+pub const MOUSE_SENSITIVITY_MIN: f32 = 0.1;
+pub const MOUSE_SENSITIVITY_MAX: f32 = 5.0;
+pub const MOUSE_SENSITIVITY_DEFAULT: f32 = 1.0;
+pub const DRAG_THRESHOLD: f32 = 5.0;
