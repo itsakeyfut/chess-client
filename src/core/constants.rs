@@ -298,3 +298,15 @@ pub fn ease_out_bounce(t: f32) -> f32 {
         N1 * t * t + 0.984375
     }
 }
+
+pub fn ease_out_elastic(t: f32) -> f32 {
+    const C4: f32 = (2.0 * std::f32::consts::PI) / 3.0;
+
+    if t == 0.0 {
+        0.0
+    } else if t == 1.0 {
+        1.0
+    } else {
+        2.0_f32.powf(-10.0 * t) * ((t * 10.0 - 0.75) * C4).sin() + 1.0
+    }
+}
