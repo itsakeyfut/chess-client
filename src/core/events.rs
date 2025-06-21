@@ -44,3 +44,18 @@ pub enum NetworkMessage {
         message: String,
     },
 }
+
+#[derive(Debug, Clone)]
+pub enum CameraAction {
+    Zoom(f32),
+    Rotate { delta_z: f32, delta_y: f32 },
+    SetPerspective(crate::game::pieces::PieceColor),
+    Reset,
+    ToggleAutoRotate,
+    SetTarget(Vec3),
+    SmoothMoveTo {
+        position: Vec3,
+        target: Vec3,
+        duration: f32,
+    },
+}
