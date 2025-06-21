@@ -175,3 +175,23 @@ impl ChessPiece {
 pub struct Selected {
     pub selected_at: f32,
 }
+
+#[derive(Component)]
+pub struct PieceAnimation {
+    pub animation_type: PieceAnimationType,
+    pub start_time: f32,
+    pub duration: f32,
+    pub start_position: Vec3,
+    pub target_position: Vec3,
+    pub ease_function: EaseFunction,
+}
+
+#[derive(Debug, Clone)]
+pub enum PieceAnimationType {
+    Move,
+    Capture,
+    Castle,
+    Promotion,
+    Hover,
+    Return,
+}
