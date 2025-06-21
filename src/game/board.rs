@@ -225,4 +225,19 @@ impl ChessBoard {
         }
         pieces
     }
+
+    pub fn get_pieces_by_color(
+        &self,
+        color: crate::game::pieces::PieceColor,
+        piece_query: &Query<&crate::game::pieces::ChessPiece>
+    ) -> Vec<(BoardPosition, Entity)> {
+        self.get_all_pieces()
+            .into_iter()
+            .filter(|(_, entity)| {
+                piece_query.get(*entity)
+                    .map(|piece| piece.color == color)
+                    .unwrap_or(false)
+            })
+            .collect()
+    }
 }
