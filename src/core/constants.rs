@@ -91,3 +91,9 @@ pub const CONNECTION_TIMEOUT_SECONDS: f32 = 10.0;
 pub const RECONNECT_ATTEMPTS: u32 = 3;
 pub const PING_INTERVAL_SECONDS: f32 = 30.0;
 pub const NETWORK_BUFFER_SIZE: usize = 8192;
+
+// Audio
+pub const DEFAULT_MASTER_VOLUME: f32 = 0.8;
+pub const DEFAULT_SFX_VOLUME: f32 = 0.7;
+pub const DEFAULT_MUSIC_VOLUME: f32 = 0.5;
+pub const AUDIO_FADE_DURATION: f32 = 1.0;
