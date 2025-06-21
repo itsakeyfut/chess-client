@@ -255,4 +255,24 @@ impl ChessBoard {
             })
             .collect()
     }
+
+    pub fn find_king(
+        &self,
+        color: crate::game::pieces::PieceColor,
+        piece_query: &Query<&crate::game::pieces::ChessPiece>
+    ) -> Option<BoardPosition> {
+        for rank in 0..8 {
+            for file in 0..8 {
+                let pos = BoardPosition::new(file, rank).unwrap();
+                if let Some(entity) = self.get_piece_at(pos) {
+                    if let Ok(piece) = piece_query.get(entity) {
+                        if piece.piece_type == crate::game::pieces::PieceType::King && piece.color == color {
+                            return Some(pos);
+                        }
+                    }
+                }
+            }
+        }
+        None
+    }
 }
