@@ -240,4 +240,19 @@ impl ChessBoard {
             })
             .collect()
     }
+
+    pub fn get_pieces_by_type(
+        &self,
+        piece_type: crate::game::pieces::PieceType,
+        piece_query: &Query<&crate::game::pieces::ChessPiece>
+    ) -> Vec<(BoardPosition, Entity)> {
+        self.get_all_pieces()
+            .into_iter()
+            .filter(|(_, entity)| {
+                piece_query.get(*entity)
+                    .map(|piece| piece.piece_type == piece_type)
+                    .unwrap_or(false)
+            })
+            .collect()
+    }
 }
