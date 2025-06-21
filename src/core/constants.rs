@@ -84,3 +84,10 @@ pub const UI_ACCENT_COLOR: Color = Color::srgb(0.2, 0.6, 0.9);
 pub const UI_SUCCESS_COLOR: Color = Color::srgb(0.2, 0.8, 0.2);
 pub const UI_WARNING_COLOR: Color = Color::srgb(0.9, 0.7, 0.1);
 pub const UI_ERROR_COLOR: Color = Color::srgb(0.9, 0.2, 0.2);
+
+// Networking
+pub const DEFAULT_SERVER_ADDRESS: &str = "127.0.0.1:8080";
+pub const CONNECTION_TIMEOUT_SECONDS: f32 = 10.0;
+pub const RECONNECT_ATTEMPTS: u32 = 3;
+pub const PING_INTERVAL_SECONDS: f32 = 30.0;
+pub const NETWORK_BUFFER_SIZE: usize = 8192;
