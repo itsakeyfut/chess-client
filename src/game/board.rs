@@ -105,4 +105,8 @@ impl BoardPosition {
             None
         }
     }
+
+    pub fn is_light_square(&self) -> bool {
+        (self.file + self.rank) % 2 == 0
+    }
 }
