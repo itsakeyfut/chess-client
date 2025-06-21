@@ -109,4 +109,10 @@ impl BoardPosition {
     pub fn is_light_square(&self) -> bool {
         (self.file + self.rank) % 2 == 0
     }
+
+    pub fn direction_to(&self, other: &BoardPosition) -> (i8, i8) {
+        let file_diff = other.file as i8 - self.file as i8;
+        let rank_diff = other.rank as i8 - self.rank as i8;
+        (file_diff.signum(), rank_diff.signum())
+    }
 }
