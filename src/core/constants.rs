@@ -220,3 +220,8 @@ pub mod debug {
     pub const LOG_PERFORMANCE: bool = false;
     pub const ENABLE_HOT_RELOAD: bool = false;
 }
+
+// Version info
+pub const CLIENT_VERSION: &str = env!("CARGO_PKG_VERSION");
+pub const CLIENT_NAME: &str = "Chess 3D Client";
+pub const PROTOCOL_VERSION: &str = "1.0";
