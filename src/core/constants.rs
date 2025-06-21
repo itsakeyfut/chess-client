@@ -194,3 +194,10 @@ pub mod timing {
     pub const AUTO_SAVE_INTERVAL: f32 = 60.0; // 1min
     pub const PING_TIMEOUT: f32 = 5.0;
 }
+
+// Game rule
+pub mod game_rules {
+    pub const FIFTY_MOVE_LIMIT: u32 = 50;
+    pub const THREEFOLD_REPETITION_LIMIT: u32 = 3;
+    pub const INSUFFICIENT_MATERIAL_PIECES: u32 = 3;
+}
