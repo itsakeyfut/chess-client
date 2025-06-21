@@ -116,3 +116,57 @@ pub struct ChessPiece {
     pub move_count: u32,
     pub last_moved_turn: Option<u32>,
 }
+
+impl ChessPiece {
+    pub fn new(piece_type: PieceType, color: PieceColor, position: BoardPosition) -> Self {
+        Self {
+            piece_type,
+            color,
+            position,
+            has_moved: false,
+            move_count: 0,
+            last_moved_turn: None,
+        }
+    }
+
+    pub fn to_fen_char(&self) -> char {
+        let base_char = self.piece_type.to_fen_char();
+        if self.color.is_uppercase() {
+            base_char.to_ascii_uppercase()
+        } else {
+            base_char
+        }
+    }
+
+    pub fn full_name(&self) -> String {
+        format!("{} {}", self.color.to_string(), self.piece_type.name())
+    }
+
+    pub fn mark_moved(&mut self, turn: u32) {
+        self.has_moved = true;
+        self.move_count += 1;
+        self.last_moved_turn = Some(turn)
+    }
+
+    pub fn set_position(&mut self, new_position: BoardPosition) {
+        self.position = new_position;
+    }
+
+    pub fn is_empty(&self, other_color: PieceColor) -> bool {
+        self.color != other_color
+    }
+
+    pub fn is_ally(&self, other_color: PieceColor) -> bool {
+        self.color == other_color
+    }
+
+    pub fn can_castle(&self) -> bool {
+        !self.has_moved && matches!(self.piece_type, PieceType::King | PieceType::Rook)
+    }
+
+    pub fn can_be_captured_en_passant(&self, current_turn: u32) -> bool {
+        self.piece_type == PieceType::Pawn &&
+        self.move_count == 1 &&
+        self.last_moved_turn == Some(current_turn - 1)
+    }
+}
