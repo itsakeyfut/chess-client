@@ -58,3 +58,16 @@ pub const PARTICLE_COUNT: u32 = 50;
 pub const EXPLOSION_DURATION: f32 = 1.0;
 pub const SPARKLE_DURATION: f32 = 2.0;
 pub const GLOW_INTENSITY: f32 = 1.5;
+
+// UI
+pub const UI_FONT_SIZE_SMALL: f32 = 14.0;
+pub const UI_FONT_SIZE_MEDIUM: f32 = 18.0;
+pub const UI_FONT_SIZE_LARGE: f32 = 24.0;
+pub const UI_FONT_SIZE_TITLE: f32 = 32.0;
+
+pub const UI_MARGIN_SMALL: f32 = 4.0;
+pub const UI_MARGIN_MEDIUM: f32 = 8.0;
+pub const UI_MARGIN_LARGE: f32 = 16.0;
+
+pub const UI_BUTTON_HEIGHT: f32 = 40.0;
+pub const UI_PANEL_BORDER_RADIUS: f32 = 8.0;
