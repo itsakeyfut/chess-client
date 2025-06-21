@@ -164,3 +164,16 @@ pub mod asset_paths {
     pub const VICTORY_MUSIC: &str = "music/victory.ogg";
     pub const DEFEAT_MUSIC: &str = "music/defeat.ogg";
 }
+
+// Layer (Rendering Order)
+pub mod render_layers {
+    pub const BOARD: f32 = 0.0;
+    pub const PIECES: f32 = 1.0;
+    pub const HIGHLIGHTS: f32 = 0.5;
+    pub const EFFECT: f32 = 2.0;
+    pub const UI_BACKGRUOND: f32 = 10.0;
+    pub const UI_CONTENT: f32 = 11.0;
+    pub const UI_OVERLAY: f32 = 12.0;
+    pub const TOOLTIP: f32 = 15.0;
+    pub const DEBUG: f32 = 20.0;
+}
