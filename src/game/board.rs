@@ -140,3 +140,10 @@ impl BoardPosition {
         positions
     }
 }
+
+#[derive(Resource)]
+pub struct ChessBoard {
+    pub squares: [[Option<Entity>; 8]; 8],
+    pub square_entities: [[Entity; 8]; 8],
+    pub is_flipped: bool,
+}
