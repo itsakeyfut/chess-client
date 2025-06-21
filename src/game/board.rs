@@ -91,4 +91,18 @@ impl BoardPosition {
         let dy = (self.rank as i8 - other.rank as i8).abs();
         dx <= 1 && dy <= 1 && (dx + dy > 0)
     }
+
+    pub fn offset(&self, file_delta: i8, rank_delta: i8) -> Option<Self> {
+        let new_file = self.file as i8 + file_delta;
+        let new_rank = self.rank as i8 + rank_delta;
+
+        if new_file >= 0 && new_file < 8 && new_rank >= 0 && new_rank < 8 {
+            Some(Self {
+                file: new_file as u8,
+                rank: new_rank as u8,
+            })
+        } else {
+            None
+        }
+    }
 }
