@@ -59,3 +59,23 @@ pub enum CameraAction {
         duration: f32,
     },
 }
+
+#[derive(Debug, Clone)]
+pub enum GameAction {
+    StartNewGame,
+    JoinGame(String),
+    LeaveGame,
+    PauseGame,
+    ResumeGame,
+    RestartGame,
+    OfferDraw,
+    Resign,
+    RequestUndo,
+    ShowLegalMoves(bool),
+    ToggleCoordinates,
+    FlipBoard,
+    SaveGame,
+    LoadGame,
+    ExportPGN,
+    ImportPGN(String),
+}
