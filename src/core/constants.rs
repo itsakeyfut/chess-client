@@ -211,3 +211,12 @@ pub mod debug {
     pub const LOG_PERFORMANCE: bool = true;
     pub const ENABLE_HOT_RELOAD: bool = true;
 }
+
+#[cfg(not(debug_assertions))]
+pub mod debug {
+    pub const SHOW_FPS_BY_DEFAULT: bool = false;
+    pub const SHOW_WIREFRAME_BY_DEFAULT: bool = false;
+    pub const LOG_NETWORK_MESSAGES: bool = false;
+    pub const LOG_PERFORMANCE: bool = false;
+    pub const ENABLE_HOT_RELOAD: bool = false;
+}
