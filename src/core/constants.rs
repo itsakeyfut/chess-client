@@ -225,3 +225,9 @@ pub mod debug {
 pub const CLIENT_VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const CLIENT_NAME: &str = "Chess 3D Client";
 pub const PROTOCOL_VERSION: &str = "1.0";
+
+// Window settings
+pub const DEFAULT_WINDOW_WIDTH: f32 = 1280.0;
+pub const DEFAULT_WINDOW_HEIGHT: f32 = 720.0;
+pub const MIN_WINDOW_WIDTH: f32 = 800.0;
+pub const MIN_WINDOW_HEIGHT: f32 = 600.0;
