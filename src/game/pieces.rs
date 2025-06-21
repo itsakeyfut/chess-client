@@ -195,3 +195,11 @@ pub enum PieceAnimationType {
     Hover,
     Return,
 }
+
+#[derive(Debug, Clone)]
+pub enum EaseFunction {
+    Linear,
+    EaseInOut,
+    EaseOut,
+    Bounce,
+}
