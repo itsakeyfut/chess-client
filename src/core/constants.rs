@@ -31,3 +31,8 @@ pub const CAMERA_DEFAULT_ANGLE_Y: f32 = 0.0;
 pub const CAMERA_ROTATION_SPEED: f32 = 2.0;
 pub const CAMERA_ZOOM_SPEED: f32 = 1.0;
 pub const CAMERA_SMOOTH_FACTOR: f32 = 5.0;
+
+// Lighting
+pub const AMBIENT_LIGHT_STRENGTH: f32 = 0.3;
+pub const DIRECTIONAL_LIGHT_STRENGTH: f32 = 0.8;
+pub const DIRECTIONAL_LIGHT_ANGLE: f32 = -45.0;
