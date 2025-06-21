@@ -147,3 +147,13 @@ pub struct ChessBoard {
     pub square_entities: [[Entity; 8]; 8],
     pub is_flipped: bool,
 }
+
+impl Default for ChessBoard {
+    fn default() -> Self {
+        Self {
+            squares: [[None; 8]; 8],
+            square_entities: [[Entity::PLACEHOLDER; 8]; 8],
+            is_flipped: false,
+        }
+    }
+}
