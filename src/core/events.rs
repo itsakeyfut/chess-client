@@ -100,3 +100,12 @@ pub enum AudioAction {
     ToggleSound,
     ToggleMusic,
 }
+
+#[derive(Debug, Clone)]
+pub enum SettingType {
+    Graphics,
+    Audio,
+    Input,
+    Network,
+    Gameplay,
+}
