@@ -44,3 +44,11 @@ pub const WHITE_PIECE_COLOR: Color = Color::srgb(0.95, 0.95, 0.92);
 pub const BLACK_PIECE_COLOR: Color = Color::srgb(0.15, 0.15, 0.15);
 pub const LIGHT_SQUARE_COLOR: Color = Color::srgb(0.93, 0.85, 0.73);
 pub const DARK_SQUARE_COLOR: Color = Color::srgb(0.65, 0.42, 0.24);
+
+// Highlight Color
+pub const SELECTED_COLOR: Color = Color::srgb(0.2, 0.8, 0.2);
+pub const LEGAL_MOVE_COLOR: Color = Color::srgba(0.2, 0.2, 0.8, 0.7);
+pub const LAST_MOVE_COLOR: Color = Color::srgba(0.8, 0.8, 0.2, 0.5);
+pub const CHECK_COLOR: Color = Color::srgb(0.9, 0.1, 0.1);
+pub const CAPTURE_COLOR: Color = Color::srgba(0.9, 0.3, 0.1, 0.8);
+pub const THREAT_COLOR: Color = Color::srgba(0.9, 0.6, 0.1, 0.6);
