@@ -212,4 +212,17 @@ impl ChessBoard {
     pub fn clear(&mut self) {
         self.squares =  [[None; 8]; 8];
     }
+
+    pub fn get_all_pieces(&self) -> Vec<(BoardPosition, Entity)> {
+        let mut pieces = Vec::new();
+        for rank in 0..8 {
+            for file in 0..8 {
+                let pos = BoardPosition::new(file, rank).unwrap();
+                if let Some(entity) = self.get_piece_at(pos) {
+                    pieces.push((pos, entity));
+                }
+            }
+        }
+        pieces
+    }
 }
