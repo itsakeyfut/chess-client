@@ -71,3 +71,16 @@ pub const UI_MARGIN_LARGE: f32 = 16.0;
 
 pub const UI_BUTTON_HEIGHT: f32 = 40.0;
 pub const UI_PANEL_BORDER_RADIUS: f32 = 8.0;
+
+// UI Color
+pub const UI_BACKGROUND_COLOR: Color = Color::srgba(0.1, 0.1, 0.1, 0.9);
+pub const UI_PANEL_COLOR: Color = Color::srgba(0.2, 0.2, 0.2, 0.95);
+pub const UI_BUTTON_COLOR: Color = Color::srgb(0.3, 0.3, 0.3);
+pub const UI_BUTTON_HOVER_COLOR: Color = Color::srgb(0.4, 0.4, 0.4);
+pub const UI_BUTTON_PRESSED_COLOR: Color = Color::srgb(0.2, 0.2, 0.2);
+pub const UI_TEXT_COLOR: Color = Color::srgb(0.9, 0.9, 0.9);
+pub const UI_TEXT_DISABLED_COLOR: Color = Color::srgb(0.5, 0.5, 0.5);
+pub const UI_ACCENT_COLOR: Color = Color::srgb(0.2, 0.6, 0.9);
+pub const UI_SUCCESS_COLOR: Color = Color::srgb(0.2, 0.8, 0.2);
+pub const UI_WARNING_COLOR: Color = Color::srgb(0.9, 0.7, 0.1);
+pub const UI_ERROR_COLOR: Color = Color::srgb(0.9, 0.2, 0.2);
