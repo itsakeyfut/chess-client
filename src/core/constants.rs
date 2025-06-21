@@ -52,3 +52,9 @@ pub const LAST_MOVE_COLOR: Color = Color::srgba(0.8, 0.8, 0.2, 0.5);
 pub const CHECK_COLOR: Color = Color::srgb(0.9, 0.1, 0.1);
 pub const CAPTURE_COLOR: Color = Color::srgba(0.9, 0.3, 0.1, 0.8);
 pub const THREAT_COLOR: Color = Color::srgba(0.9, 0.6, 0.1, 0.6);
+
+// Effect
+pub const PARTICLE_COUNT: u32 = 50;
+pub const EXPLOSION_DURATION: f32 = 1.0;
+pub const SPARKLE_DURATION: f32 = 2.0;
+pub const GLOW_INTENSITY: f32 = 1.5;
