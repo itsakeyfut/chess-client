@@ -239,3 +239,21 @@ pub struct ErrorInfo {
     pub timestamp: u64,
     pub details: Option<String>,
 }
+
+#[derive(Debug, Clone)]
+pub struct NotificationInfo {
+    pub title: String,
+    pub message: String,
+    pub notification_type: NotificationType,
+    pub duration: Option<f32>,
+    pub timestamp: u64,
+}
+
+#[derive(Debug, Clone)]
+pub enum NotificationType {
+    Info,
+    Success,
+    Warning,
+    Error,
+    GameEvent,
+}
