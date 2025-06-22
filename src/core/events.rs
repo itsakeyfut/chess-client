@@ -555,3 +555,30 @@ impl CameraControlEvent {
         }
     }
 }
+
+impl GameActionEvent {
+    pub fn start_new_game() -> Self {
+        Self {
+            action: GameAction::StartNewGame,
+        }
+    }
+
+    pub fn join_game(game_id: String) -> Self {
+        Self {
+            action: GameAction::JoinGame(game_id),
+        }
+    }
+
+    pub fn offer_draw() -> Self {
+        Self {
+            action: GameAction::OfferDraw,
+        }
+    }
+
+    pub fn resign() -> Self {
+        Self {
+            action: GameAction::Resign,
+        }
+    }
+}
+
