@@ -439,3 +439,39 @@ impl MovePieceEvent {
         self
     }
 }
+
+impl AudioEvent {
+    pub fn play_sound(sound_name: &str) -> Self {
+        Self {
+            action: AudioAction::PlaySFX {
+                sound_name: sound_name.to_string(),
+                volume: None,
+            },
+        }
+    }
+
+    pub fn play_sound_with_volume(sound_name: &str, volume: f32) -> Self {
+        Self {
+            action: AudioAction::PlaySFX {
+                sound_name: sound_name.to_string(),
+                volume: Some(volume),
+            },
+        }
+    }
+
+    pub fn play_music(music_name: &str, loop_music: bool) -> Self {
+        Self {
+            action: AudioAction::PlayMusic {
+                music_name: music_name.to_string(),
+                loop_music,
+                fade_in: None,
+            },
+        }
+    }
+
+    pub fn stop_music() -> Self {
+        Self {
+            action: AudioAction::StopMusic { fade_out: None },
+        }
+    }
+}
