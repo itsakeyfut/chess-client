@@ -145,6 +145,9 @@ pub enum AudioAction {
     SetMusicVolume(f32),
     ToggleSound,
     ToggleMusic,
+    PauseMusic,
+    ResumeMusic,
+    StopAllSound,
 }
 
 #[derive(Debug, Clone)]
