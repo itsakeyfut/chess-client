@@ -381,3 +381,20 @@ pub enum PerformanceEventType {
         execution_time_ms: f32,
     },
 }
+
+#[derive(Event)]
+pub struct DebugEvent {
+    pub message: String,
+    pub debug_type: DebugType,
+    pub timestamp: u64,
+}
+
+#[derive(Debug, Clone)]
+pub enum DebugType {
+    Info,
+    Warning,
+    Error,
+    Performance,
+    Network,
+    Gameplay,
+}
