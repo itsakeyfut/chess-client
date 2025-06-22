@@ -23,6 +23,11 @@ pub struct SendNetworkMessageEvent {
 }
 
 #[derive(Event)]
+pub struct NetworkResponseEvent {
+    pub response: ServerResponse,
+}
+
+#[derive(Event)]
 pub struct CameraControlEvent {
     pub action: CameraAction,
 }
