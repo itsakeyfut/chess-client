@@ -87,6 +87,30 @@ pub fn setup_lighting(
     ));
 }
 
+pub fn update_lighting(
+    mut lights: Query<&mut DirectionalLight, With<MainLight>>,
+    lighting_settings: Res<LightingSettings>,
+    time: Res<Time>,
+) {
+    if lighting_settings.is_changed() {
+        for mut light in lights.iter_mut() {
+            light.illuminance = lighting_settings.directional_intensity * 10000.0;
+            light.shadows_enabled = lighting_settings.enable_shadows;
+        }
+    }
+
+    let flicker = (time.elapsed_secs() * 0.5).sin() * 0.02 + 1.0;
+    for mut light in lights.iter_mut() {
+        light.illuminance *= flicker;
+    }
+}
 
 #[derive(Component)]
 pub struct MainLight;
+
+#[derive(Component)]
+pub struct DynamicLight {
+    pub base_intensity: f32,
+    pub flicker_speed: f32,
+    pub flicker_amount: f32,
+}
