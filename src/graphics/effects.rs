@@ -79,3 +79,17 @@ pub fn update_effects(
 
 #[derive(Component)]
 pub struct MaterialHandle(pub Handle<StandardMaterial>);
+
+fn get_highlight_material(
+    highlight_type: HighlightType,
+    materials: &crate::graphics::ChessMaterials,
+) -> Handle<StandardMaterial> {
+    match highlight_type {
+        HighlightType::Selected => materials.selected.clone(),
+        HighlightType::LegalMove => materials.legal_move.clone(),
+        HighlightType::LastMove => materials.last_move.clone(),
+        HighlightType::Check => materials.check.clone(),
+        HighlightType::Capture => materials.capture.clone(),
+        HighlightType::Threat => materials.threat.clone(),
+    }
+}
