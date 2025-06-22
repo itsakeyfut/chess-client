@@ -95,3 +95,24 @@ pub fn animate_camera(
         }
     }
 }
+
+pub fn start_camera_animation(
+    commands: &mut Commands,
+    camera_entity: Entity,
+    target_position: Vec3,
+    target_look_at: Vec3,
+    current_transform: &Transform,
+    duration: f32,
+    ease_type: CameraEaseType,
+    current_time: f32,
+) {
+    commands.entity(camera_entity).insert(CameraAnimation {
+        target_position,
+        target_look_at,
+        start_position: current_transform.translation,
+        start_look_at: current_transform.forward().into(),
+        start_time: current_time,
+        duration,
+        ease_type,
+    });
+}
