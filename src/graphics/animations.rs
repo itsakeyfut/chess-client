@@ -14,3 +14,34 @@ pub enum BoardAnimationType {
     Shake { intensity: f32 },
     Pulse { color: Color },
 }
+
+pub fn animate_board(
+    mut board_entities: Query<(&mut Transform, &BoardAnimation), With<super::BoardEntity>>,
+    time: Res<Time>,
+) {
+    let curr_time = time.elapsed_secs();
+
+    for (mut transform, animation) in board_entities.iter_mut() {
+        let progress = ((curr_time - animation.start_time) / animation.duration).clamp(0.0, 1.0);
+        let eased_progress = crate::core::constants::ease_in_out_cubic(progress);
+
+        match &animation.animation_type {
+            BoardAnimationType::Flip { from_angle, to_angle } => {
+                let curr_angle = from_angle + (to_angle - from_angle) * eased_progress;
+                transform.rotation = Quat::from_rotation_y(curr_angle.to_radians());
+            },
+            BoardAnimationType::Shake { intensity } => {
+                if progress < 1.0 {
+                    let shake_amount = intensity * (1.0 - progress);
+                    let shake_x = (curr_time * 20.0).sin() * shake_amount;
+                    let shake_z = (curr_time * 25.0).cos() * shake_amount;
+                    transform.translation.x += shake_x * 0.01;
+                    transform.translation.z += shake_z * 0.01;
+                }
+            },
+            BoardAnimationType::Pulse { .. } => {
+                // パルスエフェクトは別のシステムで処理
+            },
+        }
+    }
+}
