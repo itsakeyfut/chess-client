@@ -1,11 +1,13 @@
 pub mod materials;
 pub mod meshes;
+pub mod lighting;
 
 use bevy::prelude::*;
 use crate::core::{GameState, CoreSet};
 
 pub use materials::*;
 pub use meshes::*;
+pub use lighting::*;
 
 pub struct GraphicsPlugin;
 
