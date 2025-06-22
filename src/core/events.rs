@@ -378,7 +378,7 @@ pub enum InputType {
     },
     GamepadInput {
         gamepad: Gamepad,
-        input: GamepadInput,
+        input: GamepadInputType,
     },
 }
 
@@ -391,7 +391,7 @@ pub struct InputModifiers {
 }
 
 #[derive(Debug, Clone)]
-pub enum GamepadInput {
+pub enum GamepadInputType {
     Button(GamepadButton),
     Axis { axis: GamepadAxis, value: f32 },
 }
