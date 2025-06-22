@@ -414,3 +414,28 @@ impl PieceSelectedEvent {
         }
     }
 }
+
+impl MovePieceEvent {
+    pub fn player_move(from: BoardPosition, to: BoardPosition) -> Self {
+        Self {
+            from,
+            to,
+            promotion: None,
+            is_player_move: true,
+        }
+    }
+
+    pub fn network_move(from: BoardPosition, to: BoardPosition) -> Self {
+        Self {
+            from,
+            to,
+            promotion: None,
+            is_player_move: false,
+        }
+    }
+
+    pub fn with_promotion(mut self, piece_type: crate::game::pieces::PieceType) -> Self {
+        self.promotion = Some(piece_type);
+        self
+    }
+}
