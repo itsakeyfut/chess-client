@@ -582,3 +582,39 @@ impl GameActionEvent {
     }
 }
 
+impl DebugEvent {
+    pub fn new(message: String, debug_type: DebugType) -> Self {
+        Self {
+            message,
+            debug_type,
+            timestamp: std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_secs(),
+        }
+    }
+
+    pub fn info(message: String) -> Self {
+        Self::new(message, DebugType::Info)
+    }
+
+    pub fn warning(message: String) -> Self {
+        Self::new(message, DebugType::Warning)
+    }
+
+    pub fn error(message: String) -> Self {
+        Self::new(message, DebugType::Error)
+    }
+
+    pub fn performance(message: String) -> Self {
+        Self::new(message, DebugType::Performance)
+    }
+
+    pub fn network(message: String) -> Self {
+        Self::new(message, DebugType::Network)
+    }
+
+    pub fn gameplay(message: String) -> Self {
+        Self::new(message, DebugType::Gameplay)
+    }
+}
