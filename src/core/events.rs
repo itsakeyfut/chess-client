@@ -42,6 +42,28 @@ pub struct SettingsChangedEvent {
     pub settings_type: SettingType,
 }
 
+#[derive(Event)]
+pub struct NetworkEvent {
+    pub event_type: NetworkEventType,
+}
+
+#[derive(Debug, Clone)]
+pub enum NetworkEventType {
+    Connected,
+    Disconnected { reason: String },
+    ReconnectAttempt { attempt: u32 },
+    MessageReceived { message: ServerResponse },
+    MessageSent { message: ClientRequest },
+    Error { error: NetworkError },
+}
+
+#[derive(Debug, Clone)]
+pub struct NetworkError {
+    pub code: u32,
+    pub message: String,
+    pub is_recoverable: bool,
+}
+
 #[derive(Debug, Clone)]
 pub enum NetworkMessage {
     Connect {
