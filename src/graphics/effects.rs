@@ -1,5 +1,7 @@
 use bevy::prelude::*;
 
+use crate::scale_color_linear;
+
 #[derive(Resource, Default)]
 pub struct EffectSettings {
     pub enable_particles: bool,
@@ -39,3 +41,41 @@ impl HighlightType {
         }
     }
 }
+
+pub fn update_effects(
+    mut commands: Commands,
+    mut highlighted: Query<(Entity, &mut MaterialHandle, &HighlightEffect)>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+    time: Res<Time>,
+) {
+    let curr_time = time.elapsed_secs();
+
+    for (entity, material_handle, effect) in highlighted.iter_mut() {
+        if let Some(duration) = effect.duration {
+            if curr_time - effect.start_time > duration {
+                commands.entity(entity).remove::<HighlightEffect>();
+                continue;
+            }
+        }
+
+        let intensity = if let Some(duration) = effect.duration {
+            let progress = (curr_time - effect.start_time) / duration;
+            effect.intensity * (1.0 - progress).max(0.0)
+        } else {
+            effect.intensity
+        };
+
+        let pulse = (curr_time * 3.0).sin() * 0.5 + 0.5;
+        let final_intensity = intensity * (0.5 + pulse * 0.5);
+
+        let material_handle = &material_handle.0;
+
+        if let Some(material) = materials.get_mut(material_handle) {
+            let base_color = effect.highlight_type.get_color();
+            material.emissive = scale_color_linear(base_color, final_intensity);
+        }
+    }
+}
+
+#[derive(Component)]
+pub struct MaterialHandle(pub Handle<StandardMaterial>);
