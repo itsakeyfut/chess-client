@@ -68,7 +68,7 @@ pub struct NetworkError {
 pub enum NetworkMessage {
     Connect {
         player_name: String,
-        clinet_version: String,
+        client_version: String,
     },
     PlayerLeft {
         player_id: String,
@@ -224,8 +224,8 @@ pub struct GameStateSnapshot {
     pub is_check: bool,
     pub game_result: Option<GameResult>,
     pub time_control: Option<TimeControl>,
-    pub white_time_remaing: Option<f32>,
-    pub black_time_remaing: Option<f32>,
+    pub white_time_remaining: Option<f32>,
+    pub black_time_remaining: Option<f32>,
     pub last_move: Option<(BoardPosition, BoardPosition)>,
 }
 
@@ -361,7 +361,7 @@ pub enum InputType {
         delta: Vec2,
         button: MouseButton,
     },
-    MouseWHeel {
+    MouseWheel {
         delta: f32,
     },
     KeyPress {
