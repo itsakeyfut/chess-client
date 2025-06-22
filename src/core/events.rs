@@ -136,3 +136,11 @@ pub struct TimeControl {
     pub increment_seconds: u32,
     pub name: String,
 }
+
+#[derive(Debug, Clone)]
+pub enum ChatMessageType {
+    Game,
+    Global,
+    System,
+    Private,
+}
