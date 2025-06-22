@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, render::mesh::{Indices, VertexAttributeValues}};
 use crate::core::constants::*;
 
 #[derive(Resource)]
@@ -132,5 +132,47 @@ fn generate_king_mesh() -> Mesh {
 }
 
 fn merge_meshes(base: &mut Mesh, additional: Mesh, offset: Vec3) {
-    todo!()
+    let base_vertex_cnt = base.count_vertices();
+
+    // 頂点のマージ（POSITION, NORMAL, UV_0）
+    for attr in [Mesh::ATTRIBUTE_POSITION, Mesh::ATTRIBUTE_NORMAL, Mesh::ATTRIBUTE_UV_0] {
+        if let (Some(VertexAttributeValues::Float32x3(base_vals)),
+                Some(VertexAttributeValues::Float32x3(additional_vals))) =
+            (base.attribute_mut(attr).cloned(), additional.attribute(attr))
+        {
+            let mut merged = base_vals;
+            for mut pos in additional_vals.clone() {
+                // offset を POSITION にのみ適用
+                if attr.name == Mesh::ATTRIBUTE_POSITION.name {
+                    pos[0] += offset.x;
+                    pos[1] += offset.y;
+                    pos[2] += offset.z;
+                }
+                merged.push(pos);
+            }
+            base.insert_attribute(attr, VertexAttributeValues::Float32x3(merged));
+        }
+        // UVs (Vec2)
+        else if let (Some(VertexAttributeValues::Float32x2(base_vals)),
+                    Some(VertexAttributeValues::Float32x2(additional_vals))) =
+            (base.attribute_mut(attr).cloned(), additional.attribute(attr))
+        {
+            let mut merged = base_vals;
+            merged.extend_from_slice(additional_vals);
+            base.insert_attribute(attr, VertexAttributeValues::Float32x2(merged));
+        }
+    }
+
+    if let Some(Indices::U32(mut base_indices)) = base.indices_mut().cloned() {
+        if let Some(Indices::U32(additional_indices)) = additional.indices() {
+            let adjusted_indices = additional_indices
+                .iter()
+                .map(|i| i + base_vertex_cnt as u32)
+                .collect::<Vec<_>>();
+            base_indices.extend(adjusted_indices);
+            base.insert_indices(Indices::U32(base_indices));
+        }
+    } else {
+        panic!("Non-indexed meshes are not supported in merge_meshes");
+    }
 }
