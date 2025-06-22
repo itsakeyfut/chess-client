@@ -64,3 +64,34 @@ pub enum CameraEaseType {
     EaseOut,
     Smooth,
 }
+
+pub fn animate_camera(
+    mut cameras: Query<(&mut Transform, &CameraAnimation), With<super::MainCamera>>,
+    mut commands: Commands,
+    time: Res<Time>,
+) {
+    let current_time = time.elapsed_secs();
+    
+    for (entity, (mut transform, animation)) in cameras.iter_mut().enumerate() {
+        let progress = ((current_time - animation.start_time) / animation.duration).clamp(0.0, 1.0);
+        
+        let eased_progress = match animation.ease_type {
+            CameraEaseType::Linear => progress,
+            CameraEaseType::EaseInOut => crate::core::constants::ease_in_out_cubic(progress),
+            CameraEaseType::EaseOut => 1.0 - (1.0 - progress).powi(3),
+            CameraEaseType::Smooth => progress * progress * (3.0 - 2.0 * progress),
+        };
+        
+        let current_position = animation.start_position.lerp(animation.target_position, eased_progress);
+        let current_look_at = animation.start_look_at.lerp(animation.target_look_at, eased_progress);
+        
+        transform.translation = current_position;
+        transform.look_at(current_look_at, Vec3::Y);
+        
+        if progress >= 1.0 {
+            if let Ok(mut entity_commands) = commands.get_entity(Entity::from_raw(entity as u32)) {
+                entity_commands.remove::<CameraAnimation>();
+            }
+        }
+    }
+}
