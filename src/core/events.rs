@@ -475,3 +475,57 @@ impl AudioEvent {
         }
     }
 }
+
+impl NotificationInfo {
+    pub fn info(title: &str, message: &str) -> Self {
+        Self {
+            title: title.to_string(),
+            message: message.to_string(),
+            notification_type: NotificationType::Info,
+            duration: Some(3.0),
+            timestamp: std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_secs(),
+        }
+    }
+
+    pub fn success(title: &str, message: &str) -> Self {
+        Self {
+            title: title.to_string(),
+            message: message.to_string(),
+            notification_type: NotificationType::Success,
+            duration: Some(2.0),
+            timestamp: std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_secs(),
+        }
+    }
+
+    pub fn error(title: &str, message: &str) -> Self {
+        Self {
+            title: title.to_string(),
+            message: message.to_string(),
+            notification_type: NotificationType::Error,
+            duration: None,
+            timestamp: std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_secs(),
+        }
+    }
+
+    pub fn game_event(title: &str, message: &str) -> Self {
+        Self {
+            title: title.to_string(),
+            message: message.to_string(),
+            notification_type: NotificationType::GameEvent,
+            duration: Some(4.0),
+            timestamp: std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_secs(),
+        }
+    }
+}
