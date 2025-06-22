@@ -109,3 +109,19 @@ pub fn add_highlight_effect(
         start_time: current_time,
     });
 }
+
+#[derive(Component)]
+pub struct ParticleEffect {
+    pub effect_type: ParticleType,
+    pub spawn_rate: f32,
+    pub lifetime: f32,
+    pub start_time: f32,
+}
+
+#[derive(Debug, Clone)]
+pub enum ParticleType {
+    Sparkle,
+    Smoke,
+    Magic,
+    Explosion,
+}
