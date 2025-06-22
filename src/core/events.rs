@@ -398,3 +398,19 @@ pub enum DebugType {
     Network,
     Gameplay,
 }
+
+impl PieceSelectedEvent {
+    pub fn new(
+        entity: Entity,
+        position: BoardPosition,
+        piece_type: crate::game::pieces::PieceType,
+        color: crate::game::pieces::PieceColor,
+    ) -> Self {
+        Self {
+            entity,
+            position,
+            piece_type,
+            color,
+        }
+    }
+}
