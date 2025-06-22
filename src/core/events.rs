@@ -365,3 +365,19 @@ pub enum GamepadInput {
     Button(GamepadButton),
     Axis { axis: GamepadAxis, value: f32 },
 }
+
+#[derive(Event)]
+pub struct PerformanceEvent {
+    pub event_type: PerformanceEventType,
+}
+
+#[derive(Debug, Clone)]
+pub enum PerformanceEventType {
+    FrameTimeSpike { frame_time_ms: f32 },
+    MemoryUsageHigh { usage_mb: f32 },
+    LowFPS { fps: f32 },
+    SystemPerformance {
+        system_name: String,
+        execution_time_ms: f32,
+    },
+}
