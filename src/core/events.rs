@@ -22,6 +22,11 @@ pub struct SendNetworkMessageEvent {
     pub message: NetworkMessage,
 }
 
+#[derive(Event)]
+pub struct CameraControlEvent {
+    pub action: CameraAction,
+}
+
 #[derive(Debug, Clone)]
 pub enum NetworkMessage {
     Connect {
