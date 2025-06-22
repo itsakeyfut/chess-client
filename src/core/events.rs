@@ -32,6 +32,11 @@ pub struct GameActionEvent {
     pub action: GameAction,
 }
 
+#[derive(Event)]
+pub struct AudioEvent {
+    pub action: AudioAction,
+}
+
 #[derive(Debug, Clone)]
 pub enum NetworkMessage {
     Connect {
