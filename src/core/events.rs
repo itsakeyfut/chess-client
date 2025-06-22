@@ -231,3 +231,11 @@ pub enum DrawReason {
     Agreement,
     Timeout,
 }
+
+#[derive(Debug, Clone)]
+pub struct ErrorInfo {
+    pub error_code: String,
+    pub message: String,
+    pub timestamp: u64,
+    pub details: Option<String>,
+}
