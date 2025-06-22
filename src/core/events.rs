@@ -68,7 +68,7 @@ pub enum NetworkMessage {
 #[derive(Debug, Clone)]
 pub enum CameraAction {
     Zoom(f32),
-    Rotate { delta_z: f32, delta_y: f32 },
+    Rotate { delta_x: f32, delta_y: f32 },
     SetPerspective(crate::game::pieces::PieceColor),
     Reset,
     ToggleAutoRotate,
@@ -526,6 +526,32 @@ impl NotificationInfo {
                 .duration_since(std::time::UNIX_EPOCH)
                 .unwrap()
                 .as_secs(),
+        }
+    }
+}
+
+impl CameraControlEvent {
+    pub fn zoom(delta: f32) -> Self {
+        Self {
+            action: CameraAction::Zoom(delta),
+        }
+    }
+
+    pub fn rotate(delta_x: f32, delta_y: f32) -> Self {
+        Self {
+            action: CameraAction::Rotate { delta_x, delta_y },
+        }
+    }
+
+    pub fn reset() -> Self {
+        Self {
+            action: CameraAction::Reset,
+        }
+    }
+
+    pub fn set_perspective(color: crate::game::pieces::PieceColor) -> Self {
+        Self {
+            action: CameraAction::SetPerspective(color),
         }
     }
 }
