@@ -129,3 +129,10 @@ pub enum SettingType {
     Network,
     Gameplay,
 }
+
+#[derive(Debug, Clone)]
+pub struct TimeControl {
+    pub initial_time_seconds: u32,
+    pub increment_seconds: u32,
+    pub name: String,
+}
