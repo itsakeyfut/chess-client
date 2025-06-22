@@ -125,3 +125,41 @@ pub enum ParticleType {
     Magic,
     Explosion,
 }
+
+pub fn handle_graphics_settings(
+    settings: Res<crate::core::resources::GameSettings>,
+    mut effect_settings: ResMut<EffectSettings>,
+    mut lighting_settings: ResMut<crate::graphics::LightingSettings>,
+) {
+    if settings.is_changed() {
+        match settings.graphics_quality {
+            crate::core::resources::GraphicsQuality::Low => {
+                effect_settings.enable_particles = false;
+                effect_settings.enable_glow = false;
+                effect_settings.particle_density = 0.3;
+                lighting_settings.enable_shadows = false;
+            },
+            crate::core::resources::GraphicsQuality::Medium => {
+                effect_settings.enable_particles = true;
+                effect_settings.enable_glow = false;
+                effect_settings.particle_density = 0.6;
+                lighting_settings.enable_shadows = true;
+                lighting_settings.shadow_quality = 0.5;
+            },
+            crate::core::resources::GraphicsQuality::High => {
+                effect_settings.enable_particles = true;
+                effect_settings.enable_glow = true;
+                effect_settings.particle_density = 1.0;
+                lighting_settings.enable_shadows = true;
+                lighting_settings.shadow_quality = 1.0;
+            },
+            crate::core::resources::GraphicsQuality::Ultra => {
+                effect_settings.enable_particles = true;
+                effect_settings.enable_glow = true;
+                effect_settings.particle_density = 1.5;
+                lighting_settings.enable_shadows = true;
+                lighting_settings.shadow_quality = 2.0;
+            },
+        }
+    }
+}
