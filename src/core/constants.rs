@@ -321,3 +321,23 @@ pub fn ease_out_elastic(t: f32) -> f32 {
         2.0_f32.powf(-10.0 * t) * ((t * 10.0 - 0.75) * C4).sin() + 1.0
     }
 }
+
+pub fn scale_color(color: Color, scalar: f32) -> Color {
+    let srgba = color.to_srgba();
+    Color::srgba(
+        srgba.red * scalar,
+        srgba.green * scalar,
+        srgba.blue * scalar,
+        srgba.alpha
+    )
+}
+
+pub fn scale_color_linear(color: Color, scalar: f32) -> LinearRgba {
+    let linear = color.to_linear();
+    LinearRgba {
+        red: linear.red * scalar,
+        green: linear.green * scalar,
+        blue: linear.blue * scalar,
+        alpha: linear.alpha,
+    }
+}
