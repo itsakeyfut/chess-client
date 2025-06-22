@@ -116,3 +116,11 @@ pub fn start_camera_animation(
         ease_type,
     });
 }
+
+#[derive(Component)]
+pub struct FloatingAnimation {
+    pub base_position: Vec3,
+    pub amplitude: f32,
+    pub frequency: f32,
+    pub phase: f32,
+}
