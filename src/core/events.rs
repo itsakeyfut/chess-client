@@ -172,3 +172,21 @@ pub enum PlayerStatus {
     InGame,
     Offline,
 }
+
+#[derive(Debug, Clone)]
+pub struct GameInfo {
+    pub id: String,
+    pub white_player: Option<PlayerInfo>,
+    pub black_player: Option<PlayerInfo>,
+    pub status: GameStatus,
+    pub time_control: Option<TimeControl>,
+    pub move_count: u32,
+    pub created_at: u64,
+}
+
+#[derive(Debug, Clone)]
+pub enum GameStatus {
+    Waiting,
+    Active,
+    Finished,
+}
