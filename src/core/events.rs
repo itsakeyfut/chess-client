@@ -153,3 +153,22 @@ pub struct ServerInfo {
     pub current_players: u32,
     pub features: Vec<String>,
 }
+
+#[derive(Debug, Clone)]
+pub struct PlayerInfo {
+    pub id: String,
+    pub name: String,
+    pub rating: u32,
+    pub games_played: u32,
+    pub win_rate: f32,
+    pub is_online: bool,
+    pub status: PlayerStatus,
+}
+
+#[derive(Debug, Clone)]
+pub enum PlayerStatus {
+    Online,
+    Away,
+    InGame,
+    Offline,
+}
