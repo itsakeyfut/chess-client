@@ -114,3 +114,15 @@ pub struct DynamicLight {
     pub flicker_speed: f32,
     pub flicker_amount: f32,
 }
+
+pub fn update_dynamic_lights(
+    mut lights: Query<(&mut DirectionalLight, &DynamicLight)>,
+    time: Res<Time>,
+) {
+    let time_seconds = time.elapsed_secs();
+
+    for (mut light, dynamic) in lights.iter_mut() {
+        let flicker = (time_seconds * dynamic.flicker_speed).sin() * dynamic.flicker_amount;
+        light.illuminance = dynamic.base_intensity * (1.0 + flicker);
+    }
+}
