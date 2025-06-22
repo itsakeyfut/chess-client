@@ -190,3 +190,28 @@ pub enum GameStatus {
     Active,
     Finished,
 }
+
+#[derive(Debug, Clone)]
+pub enum GameResult {
+    WhiteWins(GameEndReason),
+    BlackWins(GameEndReason),
+    Draw(DrawReason),
+}
+
+#[derive(Debug, Clone)]
+pub enum GameEndReason {
+    Checkmate,
+    Resignation,
+    Timeout,
+    Disconnection,
+}
+
+#[derive(Debug, Clone)]
+pub enum DrawReason {
+    Stalemate,
+    InsufficientMaterial,
+    ThreefoldRepetition,
+    FiftyMoveRule,
+    Agreement,
+    Timeout,
+}
