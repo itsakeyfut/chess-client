@@ -192,6 +192,22 @@ pub enum GameStatus {
 }
 
 #[derive(Debug, Clone)]
+pub struct GameStateSnapshot {
+    pub board_fen: Vec<String>,
+    pub move_history: Vec<String>,
+    pub white_player: Option<PlayerInfo>,
+    pub black_player: Option<PlayerInfo>,
+    pub current_player: crate::game::pieces::PieceColor,
+    pub move_count: u32,
+    pub is_check: bool,
+    pub game_result: Option<GameResult>,
+    pub time_control: Option<TimeControl>,
+    pub white_time_remaing: Option<f32>,
+    pub black_time_remaing: Option<f32>,
+    pub last_move: Option<(BoardPosition, BoardPosition)>,
+}
+
+#[derive(Debug, Clone)]
 pub enum GameResult {
     WhiteWins(GameEndReason),
     BlackWins(GameEndReason),
