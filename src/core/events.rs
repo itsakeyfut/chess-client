@@ -144,3 +144,12 @@ pub enum ChatMessageType {
     System,
     Private,
 }
+
+#[derive(Debug, Clone)]
+pub struct ServerInfo {
+    pub server_name: String,
+    pub version: String,
+    pub max_players: u32,
+    pub current_players: u32,
+    pub features: Vec<String>,
+}
