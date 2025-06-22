@@ -218,6 +218,7 @@ pub enum GameStatus {
     Waiting,
     Active,
     Finished,
+    Paused,
 }
 
 #[derive(Debug, Clone)]
