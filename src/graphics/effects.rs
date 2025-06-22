@@ -93,3 +93,19 @@ fn get_highlight_material(
         HighlightType::Threat => materials.threat.clone(),
     }
 }
+
+pub fn add_highlight_effect(
+    commands: &mut Commands,
+    entity: Entity,
+    highlight_type: HighlightType,
+    intensity: f32,
+    duration: Option<f32>,
+    current_time: f32,
+) {
+    commands.entity(entity).insert(HighlightEffect {
+        highlight_type,
+        intensity,
+        duration,
+        start_time: current_time,
+    });
+}
