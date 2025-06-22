@@ -5,7 +5,7 @@ use crate::game::board::BoardPosition;
 pub struct PieceSelectedEvent {
     pub entity: Entity,
     pub position: BoardPosition,
-    pub piece_type: crate::game::PieceType,
+    pub piece_type: crate::game::pieces::PieceType,
     pub color: crate::game::pieces::PieceColor,
 }
 
@@ -618,3 +618,103 @@ impl DebugEvent {
         Self::new(message, DebugType::Gameplay)
     }
 }
+
+#[derive(Debug, Clone)]
+pub enum ServerResponse {
+    Connected {
+        player_id: String,
+        session_id: String,
+        server_info: ServerInfo,
+    },
+    Authenticated {
+        player_info: PlayerInfo,
+    },
+    GameCreated {
+        game_id: String,
+        player_color: crate::game::pieces::PieceColor,
+    },
+    GameJoined {
+        game_id: String,
+        player_color: crate::game::pieces::PieceColor,
+        opponent_info: Option<PlayerInfo>,
+        game_state: GameStateSnapshot,
+    },
+    MoveUpdate {
+        from: BoardPosition,
+        to: BoardPosition,
+        promotion: Option<crate::game::pieces::PieceType>,
+        move_number: u32,
+        time_remaining: Option<(f32, f32)>,
+    },
+    GameStateUpdate {
+        game_state: GameStateSnapshot,
+    },
+    GameOver {
+        result: GameResult,
+    },
+    DrawOffered {
+        from_player: String,
+    },
+    DrawResponse {
+        accepted: bool,
+    },
+    UndoOffered {
+        from_player: String,
+        moves_count: u32,
+    },
+    UndoResponse {
+        accepted: bool,
+    },
+    ChatMessage {
+        from_player: String,
+        message: String,
+        message_type: ChatMessageType,
+        timestamp: u64,
+    },
+    GameList {
+        games: Vec<GameInfo>,
+    },
+    PlayerList {
+        players: Vec<PlayerInfo>,
+    },
+    Error {
+        message: String,
+        error_code: Option<u32>,
+    },
+    Pong,
+}
+
+#[derive(Debug, Clone)]
+pub enum ClientRequest {
+    CreateGame {
+        time_control: Option<TimeControl>,
+        is_private: bool,
+    },
+    JoinGame {
+        game_id: String,
+        password: Option<String>,
+    },
+    MakeMove { 
+        from: BoardPosition, 
+        to: BoardPosition,
+        promotion: Option<crate::game::pieces::PieceType>,
+    },
+    OfferDraw,
+    AcceptDraw,
+    DeclineDraw,
+    Resign,
+    RequestUndo,
+    AcceptUndo,
+    DeclineUndo,
+    SendChatMessage {
+        message: String,
+        message_type: ChatMessageType,
+    },
+    Disconnect {
+        reason: Option<String>,
+    },
+    Ping,
+    GetGameList,
+    GetPlayerList,
+}
+
