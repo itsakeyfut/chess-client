@@ -257,3 +257,65 @@ pub enum NotificationType {
     Error,
     GameEvent,
 }
+
+#[derive(Event)]
+pub struct AnimationEvent {
+    pub entity: Entity,
+    pub animation_type: AnimationType,
+}
+
+#[derive(Debug, Clone)]
+pub enum AnimationType {
+    PieceMove {
+        from: Vec3,
+        to: Vec3,
+        duration: f32,
+        ease_type: EaseType,
+    },
+    PieceCapture {
+        capture_position: Vec3,
+        duration: f32,
+    },
+    PiecePromotion {
+        position: Vec3,
+        new_piece_type: crate::game::pieces::PieceType,
+        duration: f32,
+    },
+    BoardHighlight {
+        positions: Vec<BoardPosition>,
+        highlight_type: HighlightType,
+        duration: Option<f32>,
+    },
+    CameraMove {
+        target_position: Vec3,
+        target_look_at: Vec3,
+        duration: f32,
+        ease_type: EaseType,
+    },
+    UIFadeIn {
+        duration: f32,
+    },
+    UIFadeOut {
+        duration: f32,
+    },
+}
+
+#[derive(Debug, Clone)]
+pub enum EaseType {
+    Linear,
+    EaseIn,
+    EaseOut,
+    EaseInOut,
+    Bounce,
+    Elastic,
+}
+
+#[derive(Debug, Clone)]
+pub enum HighlightType {
+    Selected,
+    LegalMove,
+    LastMove,
+    Check,
+    Capture,
+    Threat,
+}
