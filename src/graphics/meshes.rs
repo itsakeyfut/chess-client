@@ -13,3 +13,19 @@ pub struct ChessMeshes {
     pub highlight_circle: Handle<Mesh>,
     pub highlight_square: Handle<Mesh>,
 }
+
+impl Default for ChessMeshes {
+    fn default() -> Self {
+        Self {
+            board_square: Handle::default(),
+            pawn: Handle::default(),
+            rook: Handle::default(),
+            knight: Handle::default(),
+            bishop: Handle::default(),
+            queen: Handle::default(),
+            king: Handle::default(),
+            highlight_circle: Handle::default(),
+            highlight_square: Handle::default(),
+        }
+    }
+}
