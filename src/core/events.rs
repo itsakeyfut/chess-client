@@ -37,6 +37,11 @@ pub struct AudioEvent {
     pub action: AudioAction,
 }
 
+#[derive(Event)]
+pub struct SettingsChangedEvent {
+    pub settings_type: SettingType,
+}
+
 #[derive(Debug, Clone)]
 pub enum NetworkMessage {
     Connect {
