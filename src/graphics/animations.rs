@@ -45,3 +45,22 @@ pub fn animate_board(
         }
     }
 }
+
+#[derive(Component)]
+pub struct CameraAnimation {
+    pub target_position: Vec3,
+    pub target_look_at: Vec3,
+    pub start_position: Vec3,
+    pub start_look_at: Vec3,
+    pub start_time: f32,
+    pub duration: f32,
+    pub ease_type: CameraEaseType,
+}
+
+#[derive(Debug, Clone)]
+pub enum CameraEaseType {
+    Linear,
+    EaseInOut,
+    EaseOut,
+    Smooth,
+}
