@@ -319,3 +319,49 @@ pub enum HighlightType {
     Capture,
     Threat,
 }
+
+#[derive(Event)]
+pub struct InputEvent {
+    pub input_type: InputType,
+}
+
+#[derive(Debug)]
+pub enum InputType {
+    MouseClick {
+        position: Vec2,
+        button: MouseButton,
+        world_position: Option<Vec3>,
+        board_position: Option<BoardPosition>,
+    },
+    MouseDrag {
+        start: Vec2,
+        current: Vec2,
+        delta: Vec2,
+        button: MouseButton,
+    },
+    MouseWHeel {
+        delta: f32,
+    },
+    KeyPress {
+        key: KeyCode,
+        modifiers: InputModifiers,
+    },
+    GamepadInput {
+        gamepad: Gamepad,
+        input: GamepadInput,
+    },
+}
+
+#[derive(Debug, Clone)]
+pub struct InputModifiers {
+    pub ctrl: bool,
+    pub alt: bool,
+    pub shift: bool,
+    pub super_key: bool,
+}
+
+#[derive(Debug, Clone)]
+pub enum GamepadInput {
+    Button(GamepadButton),
+    Axis { axis: GamepadAxis, value: f32 },
+}
