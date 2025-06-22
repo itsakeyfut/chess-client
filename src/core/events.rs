@@ -504,6 +504,18 @@ impl AudioEvent {
             action: AudioAction::StopMusic { fade_out: None },
         }
     }
+
+    pub fn pause_music() -> Self {
+        Self {
+            action: AudioAction::PauseMusic,
+        }
+    }
+
+    pub fn resume_music() -> Self {
+        Self {
+            action: AudioAction::ResumeMusic,
+        }
+    }
 }
 
 impl NotificationInfo {
