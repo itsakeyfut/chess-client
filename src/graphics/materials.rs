@@ -126,3 +126,32 @@ impl ChessMaterials {
         }
     }
 }
+
+pub fn animate_materials(
+    mut materials: ResMut<Assets<StandardMaterial>>,
+    chess_materials: Res<ChessMaterials>,
+    time: Res<Time>,
+) {
+    let time_seconds = time.elapsed_secs();
+
+    if let Some(check_material) = materials.get_mut(&chess_materials.check) {
+        let pulse = (time_seconds * 3.0).sin() * 0.5 + 0.5;
+        check_material.emissive = scale_color_linear(CHECK_COLOR, 0.3 + pulse * 0.4);
+    }
+}
+
+#[derive(Resource, Default)]
+pub struct MaterialAnimations {
+    /// handle, base_color, frequency
+    pub pulsing_materials: Vec<(Handle<StandardMaterial>, Color, f32)>,
+}
+
+impl MaterialAnimations {
+    pub fn add_pulsing(&mut self, material: Handle<StandardMaterial>, color: Color, frequency: f32) {
+        self.pulsing_materials.push((material, color, frequency));
+    }
+
+    pub fn clear(&mut self) {
+        self.pulsing_materials.clear();
+    }
+}
