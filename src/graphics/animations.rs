@@ -124,3 +124,15 @@ pub struct FloatingAnimation {
     pub frequency: f32,
     pub phase: f32,
 }
+
+pub fn animate_floating_pieces(
+    mut pieces: Query<(&mut Transform, &FloatingAnimation)>,
+    time: Res<Time>,
+) {
+    let curr_time = time.elapsed_secs();
+
+    for (mut transform, floating) in pieces.iter_mut() {
+        let offset_y = (curr_time * floating.frequency + floating.phase).sin() * floating.amplitude;
+        transform.translation = floating.base_position + Vec3::new(0.0, offset_y, 0.0);
+    }
+}
