@@ -66,13 +66,13 @@ pub enum CameraEaseType {
 }
 
 pub fn animate_camera(
-    mut cameras: Query<(&mut Transform, &CameraAnimation), With<super::MainCamera>>,
+    mut cameras: Query<(Entity, &mut Transform, &CameraAnimation), With<super::MainCamera>>,
     mut commands: Commands,
     time: Res<Time>,
 ) {
     let current_time = time.elapsed_secs();
     
-    for (entity, (mut transform, animation)) in cameras.iter_mut().enumerate() {
+    for (entity, mut transform, animation) in cameras.iter_mut() {
         let progress = ((current_time - animation.start_time) / animation.duration).clamp(0.0, 1.0);
         
         let eased_progress = match animation.ease_type {
@@ -89,7 +89,7 @@ pub fn animate_camera(
         transform.look_at(current_look_at, Vec3::Y);
         
         if progress >= 1.0 {
-            if let Ok(mut entity_commands) = commands.get_entity(Entity::from_raw(entity as u32)) {
+            if let Ok(mut entity_commands) = commands.get_entity(entity) {
                 entity_commands.remove::<CameraAnimation>();
             }
         }
