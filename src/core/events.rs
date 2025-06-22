@@ -28,6 +28,12 @@ pub struct NetworkResponseEvent {
 }
 
 #[derive(Event)]
+pub struct UIStateChangeEvent {
+    pub ui_state: crate::core::states::UIState,
+    pub show: bool,
+}
+
+#[derive(Event)]
 pub struct CameraControlEvent {
     pub action: CameraAction,
 }
