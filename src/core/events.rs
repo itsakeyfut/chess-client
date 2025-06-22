@@ -661,6 +661,40 @@ impl DebugEvent {
     }
 }
 
+impl NetworkEvent {
+    pub fn connected() -> Self {
+        Self {
+            event_type: NetworkEventType::Connected,
+        }
+    }
+
+    pub fn disconnected(reason: &str) -> Self {
+        Self {
+            event_type: NetworkEventType::Disconnected {
+                reason: reason.to_string(),
+            },
+        }
+    }
+
+    pub fn message_received(message: ServerResponse) -> Self {
+        Self {
+            event_type: NetworkEventType::MessageReceived { message },
+        }
+    }
+
+    pub fn message_sent(message: ClientRequest) -> Self {
+        Self {
+            event_type: NetworkEventType::MessageSent { message },
+        }
+    }
+
+    pub fn error(error: NetworkError) -> Self {
+        Self {
+            event_type: NetworkEventType::Error { error },
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub enum ServerResponse {
     Connected {
