@@ -27,6 +27,11 @@ pub struct CameraControlEvent {
     pub action: CameraAction,
 }
 
+#[derive(Event)]
+pub struct GameActionEvent {
+    pub action: GameAction,
+}
+
 #[derive(Debug, Clone)]
 pub enum NetworkMessage {
     Connect {
