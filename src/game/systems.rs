@@ -27,3 +27,9 @@ pub fn setup_game_camera(
     info!("Setting up game camera...");
     camera_controller.reset_to_default();
 }
+
+pub fn handle_piece_movement() { todo!() }
+pub fn validate_moves() { todo!() }
+pub fn update_game_state() { todo!() }
+pub fn check_game_end_conditions() { todo!() }
+pub fn update_legal_moves() { todo!() }
