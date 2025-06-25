@@ -52,3 +52,6 @@ pub fn animate_pieces(
 ) {
     crate::game::pieces::animate_pieces(commands, pieces, time);
 }
+
+pub fn update_game_ui() { todo!() }
+pub fn update_move_history_display() { todo!() }
