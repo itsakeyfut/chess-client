@@ -80,6 +80,47 @@ pub fn generate_detailed_rook_mesh() -> Mesh {
     mesh_data.to_mesh()
 }
 
+pub fn generate_detailed_knight_mesh() -> Mesh {
+    let mut mesh_data = MeshData::new();
+
+    add_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::ZERO,
+        PIECE_RADIUS * 0.8,
+        KNIGHT_HEIGHT * 0.3,
+        8
+    );
+
+    add_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, KNIGHT_HEIGHT * 0.4, PIECE_RADIUS * 0.2),
+        PIECE_RADIUS * 0.4,
+        KNIGHT_HEIGHT * 0.3,
+        6
+    );
+
+    add_elongated_sphere_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, KNIGHT_HEIGHT * 0.7, PIECE_RADIUS * 0.4),
+        Vec3::new(PIECE_RADIUS * 0.3, PIECE_RADIUS * 0.25, PIECE_RADIUS * 0.4),
+        6,
+        4
+    );
+
+    add_box_to_mesh(
+        &mut mesh_data,
+        Vec3::new(PIECE_RADIUS * 0.2, KNIGHT_HEIGHT * 0.8, PIECE_RADIUS * 0.3),
+        Vec3::new(0.05, 0.15, 0.03)
+    );
+    add_box_to_mesh(
+        &mut mesh_data,
+        Vec3::new(-PIECE_RADIUS * 0.2, KNIGHT_HEIGHT * 0.8, PIECE_RADIUS * 0.3),
+        Vec3::new(0.05, 0.15, 0.03)
+    );
+
+    mesh_data.to_mesh()
+}
+
 struct MeshData {
     verticles: Vec<Vec3>,
     normals: Vec<Vec3>,
