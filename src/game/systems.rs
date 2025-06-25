@@ -20,3 +20,10 @@ pub fn setup_initial_pieces(
     info!("Setting up initial pieces...");
     crate::game::pieces::spawn_initial_pieces(commands, board, meshes, materials);
 }
+
+pub fn setup_game_camera(
+    mut camera_controller: ResMut<crate::core::CameraController>,
+) {
+    info!("Setting up game camera...");
+    camera_controller.reset_to_default();
+}
