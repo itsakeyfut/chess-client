@@ -121,6 +121,48 @@ pub fn generate_detailed_knight_mesh() -> Mesh {
     mesh_data.to_mesh()
 }
 
+pub fn generate_detailed_bishop_mesh() -> Mesh {
+    let mut mesh_data = MeshData::new();
+
+    add_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::ZERO,
+        PIECE_RADIUS * 0.8,
+        BISHOP_HEIGHT * 0.25,
+        8
+    );
+
+    add_tapered_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, BISHOP_HEIGHT * 0.25, 0.0),
+        PIECE_RADIUS * 0.7,
+        PIECE_RADIUS * 0.3,
+        BISHOP_HEIGHT * 0.6,
+        8
+    );
+
+    add_sphere_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, BISHOP_HEIGHT * 0.9, 0.0),
+        PIECE_RADIUS * 0.25,
+        6,
+        4
+    );
+
+    add_box_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, BISHOP_HEIGHT * 0.95, 0.0),
+        Vec3::new(0.03, 0.1, 0.15)
+    );
+    add_box_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, BISHOP_HEIGHT * 0.95, 0.0),
+        Vec3::new(0.15, 0.1, 0.03)
+    );
+
+    mesh_data.to_mesh()
+}
+
 struct MeshData {
     verticles: Vec<Vec3>,
     normals: Vec<Vec3>,
