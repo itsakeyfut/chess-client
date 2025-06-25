@@ -14,6 +14,22 @@ pub struct GameStateResource {
     pub fullmove_number: u32,
 }
 
+impl Default for GameStateResource {
+    fn default() -> Self {
+        Self {
+            current_player: PieceColor::White,
+            move_count: 0,
+            game_phase: GamePhase::Opening,
+            game_status: GameStatus::InProgress,
+            check_status: CheckStatus::None,
+            castling_rights: CastlingRights::all(),
+            en_passant_target: None,
+            halfmove_clock: 0,
+            fullmove_number: 1,
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum GamePhase {
     Opening,
