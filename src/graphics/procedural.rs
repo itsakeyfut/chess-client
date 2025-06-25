@@ -1,4 +1,4 @@
-use bevy::{prelude::*, render::mesh};
+use bevy::prelude::*;
 use crate::core::constants::*;
 
 pub fn generate_detailed_pawn_mesh() -> Mesh {
