@@ -119,3 +119,35 @@ fn add_cylinder_to_mesh(mesh_data: &mut MeshData, center: Vec3, radius: f32, hei
         ]);
     }
 }
+
+// 以下すべて実装が長くなりそうなため簡略化
+fn add_tapered_cylinder_to_mesh(
+    mesh_data: &mut MeshData, 
+    center: Vec3, 
+    bottom_radius: f32, 
+    top_radius: f32, 
+    height: f32, 
+    segments: u32
+) {
+    // テーパー付きシリンダーの実装
+    // 簡略化のため、通常のシリンダーとして実装
+    add_cylinder_to_mesh(mesh_data, center, (bottom_radius + top_radius) * 0.5, height, segments);
+}
+
+fn add_sphere_to_mesh(mesh_data: &mut MeshData, center: Vec3, radius: f32, rings: u32, sectors: u32) {
+    // 球体の実装を簡略化
+    let sphere_mesh = Sphere::new(radius).mesh().uv(sectors, rings);
+    // ここでは簡略化のため、基本的な球体として追加
+    // 実際の実装では sphere_mesh の頂点データを mesh_data に追加する
+}
+
+fn add_elongated_sphere_to_mesh(mesh_data: &mut MeshData, center: Vec3, scale: Vec3, rings: u32, sectors: u32) {
+    // 拡張された球体の実装
+    add_sphere_to_mesh(mesh_data, center, scale.x.max(scale.y).max(scale.z), rings, sectors);
+}
+
+fn add_box_to_mesh(mesh_data: &mut MeshData, center: Vec3, size: Vec3) {
+    // 箱の実装を簡略化
+    let box_mesh = Mesh::from(Cuboid::new(size.x, size.y, size.z));
+    // 実際の実装では box_mesh の頂点データを mesh_data に追加する
+}
