@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::game::board::ChessBoard;
+use crate::game::{board::ChessBoard, ChessPiece};
 
 pub fn setup_chess_board(
     mut commands: Commands,
@@ -33,3 +33,12 @@ pub fn validate_moves() { todo!() }
 pub fn update_game_state() { todo!() }
 pub fn check_game_end_conditions() { todo!() }
 pub fn update_legal_moves() { todo!() }
+
+pub fn update_piece_positions(
+    mut pieces: Query<(&mut Transform, &ChessPiece), Without<crate::game::pieces::PieceAnimation>>,
+) {
+    for (mut transform, piece) in pieces.iter_mut() {
+        let target_position = piece.position.to_world_position();
+        transform.translation = target_position;
+    }
+}
