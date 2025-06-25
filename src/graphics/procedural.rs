@@ -35,7 +35,7 @@ pub fn generate_detailed_pawn_mesh() -> Mesh {
 pub fn generate_detailed_rook_mesh() -> Mesh {
     let mut mesh_data = MeshData::new();
 
-    add_cylinder_to_mash(
+    add_cylinder_to_mesh(
         &mut mesh_data,
         Vec3::ZERO,
         PIECE_RADIUS * 0.9,
