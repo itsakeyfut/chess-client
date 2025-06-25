@@ -55,3 +55,15 @@ pub fn animate_pieces(
 
 pub fn update_game_ui() { todo!() }
 pub fn update_move_history_display() { todo!() }
+
+pub fn cleanup_game_entities(
+    mut commands: Commands,
+    game_entities: Query<Entity, Or<(
+        With<ChessPiece>,
+        With<crate::graphics::BoardEntity>,
+    )>>,
+) {
+    for entity in game_entities.iter() {
+        commands.entity(entity).despawn();
+    }
+}
