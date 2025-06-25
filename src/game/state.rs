@@ -6,3 +6,14 @@ pub enum GamePhase {
     Middlegame,
     Endgame,
 }
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum GameStatus {
+    InProgress,
+    Check,
+    Checkmate,
+    Stalemate,
+    Draw,
+    Resigned,
+    Timeout,
+}
