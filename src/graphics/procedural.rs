@@ -1,5 +1,36 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, render::mesh};
 use crate::core::constants::*;
+
+pub fn generate_detailed_pawn_mesh() -> Mesh {
+    let mut mesh_data = MeshData::new();
+
+    add_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, 0.0, 0.0),
+        PIECE_RADIUS,
+        PAWN_HEIGHT * 0.2,
+        8
+    );
+
+    add_tapered_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, PAWN_HEIGHT * 0.2, 0.0),
+        PIECE_RADIUS * 0.8,
+        PIECE_RADIUS * 0.6,
+        PAWN_HEIGHT * 0.5,
+        8
+    );
+
+    add_sphere_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, PAWN_HEIGHT * 0.8, 0.0),
+        PIECE_RADIUS * 0.4,
+        6,
+        4,
+    );
+
+    mesh_data.to_mesh()
+}
 
 struct MeshData {
     verticles: Vec<Vec3>,
