@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use crate::PieceColor;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum GamePhase {
@@ -16,4 +17,11 @@ pub enum GameStatus {
     Draw,
     Resigned,
     Timeout,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum CheckStatus {
+    None,
+    Check(PieceColor),
+    Checkmate(PieceColor),
 }
