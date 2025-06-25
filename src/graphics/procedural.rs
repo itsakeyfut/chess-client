@@ -210,6 +210,49 @@ pub fn generate_detailed_queen_mesh() -> Mesh {
     mesh_data.to_mesh()
 }
 
+pub fn generate_detailed_king_mesh() -> Mesh {
+    let mut mesh_data = MeshData::new();
+
+    add_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::ZERO,
+        PIECE_RADIUS,
+        KING_HEIGHT * 0.3,
+        8
+    );
+
+    add_tapered_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, KING_HEIGHT * 0.3, 0.0),
+        PIECE_RADIUS * 0.9,
+        PIECE_RADIUS * 0.6,
+        KING_HEIGHT * 0.5,
+        8
+    );
+
+    add_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, KING_HEIGHT * 0.8, 0.0),
+        PIECE_RADIUS * 0.7,
+        KING_HEIGHT * 0.1,
+        8
+    );
+
+    add_box_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, KING_HEIGHT * 0.95, 0.0),
+        Vec3::new(0.05, KING_HEIGHT * 0.2, 0.05)
+    );
+
+    add_box_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, KING_HEIGHT * 1.0, 0.0),
+        Vec3::new(0.15, 0.05, 0.05)
+    );
+
+    mesh_data.to_mesh()
+}
+
 struct MeshData {
     verticles: Vec<Vec3>,
     normals: Vec<Vec3>,
