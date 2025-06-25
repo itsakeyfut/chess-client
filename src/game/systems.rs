@@ -28,10 +28,15 @@ pub fn setup_game_camera(
     camera_controller.reset_to_default();
 }
 
+// TODO: 駒の移動処理を行うこと
 pub fn handle_piece_movement() { todo!() }
+// TODO: 手を検証すること
 pub fn validate_moves() { todo!() }
+// TODO: ゲーム状態を更新すること
 pub fn update_game_state() { todo!() }
+// TODO: ゲーム終了条件をチェックすること
 pub fn check_game_end_conditions() { todo!() }
+// TODO: 合法手を更新すること
 pub fn update_legal_moves() { todo!() }
 
 pub fn update_piece_positions(
@@ -43,6 +48,7 @@ pub fn update_piece_positions(
     }
 }
 
+// TODO: 盤面のハイライトを更新すること
 pub fn update_board_highlights() { todo!() }
 
 pub fn animate_pieces(
@@ -53,7 +59,9 @@ pub fn animate_pieces(
     crate::game::pieces::animate_pieces(commands, pieces, time);
 }
 
+// TODO: ゲームUIを更新すること
 pub fn update_game_ui() { todo!() }
+// TODO: 手履歴の表示を更新すること
 pub fn update_move_history_display() { todo!() }
 
 pub fn cleanup_game_entities(
@@ -68,4 +76,5 @@ pub fn cleanup_game_entities(
     }
 }
 
+// TODO: ゲーム状態を保存すること
 pub fn save_game_state() { todo!() }
