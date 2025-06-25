@@ -44,3 +44,11 @@ pub fn update_piece_positions(
 }
 
 pub fn update_board_highlights() { todo!() }
+
+pub fn animate_pieces(
+    mut commands: Commands,
+    mut pieces: Query<(Entity, &mut Transform, &crate::game::pieces::PieceAnimation)>,
+    time: Res<Time>,
+) {
+    crate::game::pieces::animate_pieces(commands, pieces, time);
+}
