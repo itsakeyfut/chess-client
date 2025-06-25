@@ -163,6 +163,53 @@ pub fn generate_detailed_bishop_mesh() -> Mesh {
     mesh_data.to_mesh()
 }
 
+pub fn generate_detailed_queen_mesh() -> Mesh {
+    let mut mesh_data = MeshData::new();
+
+    add_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::ZERO,
+        PIECE_RADIUS * 0.9,
+        QUEEN_HEIGHT * 0.3,
+        8
+    );
+
+    add_tapered_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, QUEEN_HEIGHT * 0.3, 0.0),
+        PIECE_RADIUS * 0.8,
+        PIECE_RADIUS * 0.5,
+        QUEEN_HEIGHT * 0.4,
+        8
+    );
+
+    add_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, QUEEN_HEIGHT * 0.7, 0.0),
+        PIECE_RADIUS * 0.6,
+        QUEEN_HEIGHT * 0.1,
+        8
+    );
+
+    for i in 0..8 {
+        let angle = i as f32 * std::f32::consts::PI * 0.25;
+        let x = angle.cos() * PIECE_RADIUS * 0.55;
+        let z = angle.sin() * PIECE_RADIUS * 0.55;
+        let height = if 1 % 2 == 0 { 0.25 } else { 0.15 };
+
+        add_tapered_cylinder_to_mesh(
+            &mut mesh_data,
+            Vec3::new(x, QUEEN_HEIGHT * 0.8, z),
+            0.04,
+            0.02,
+            QUEEN_HEIGHT * height,
+            4
+        );
+    }
+
+    mesh_data.to_mesh()
+}
+
 struct MeshData {
     verticles: Vec<Vec3>,
     normals: Vec<Vec3>,
