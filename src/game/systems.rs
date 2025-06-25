@@ -67,3 +67,5 @@ pub fn cleanup_game_entities(
         commands.entity(entity).despawn();
     }
 }
+
+pub fn save_game_state() { todo!() }
