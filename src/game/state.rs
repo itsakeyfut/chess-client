@@ -1,5 +1,18 @@
 use bevy::prelude::*;
-use crate::PieceColor;
+use crate::{BoardPosition, PieceColor};
+
+#[derive(Resource)]
+pub struct GameStateResource {
+    pub current_player: PieceColor,
+    pub move_count: u32,
+    pub game_phase: GamePhase,
+    pub game_status: GameStatus,
+    pub check_status: CheckStatus,
+    pub castling_rights: CastlingRights,
+    pub en_passant_target: Option<BoardPosition>,
+    pub halfmove_clock: u32,
+    pub fullmove_number: u32,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum GamePhase {
