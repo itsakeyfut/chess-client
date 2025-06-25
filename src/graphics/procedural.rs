@@ -32,6 +32,54 @@ pub fn generate_detailed_pawn_mesh() -> Mesh {
     mesh_data.to_mesh()
 }
 
+pub fn generate_detailed_rook_mesh() -> Mesh {
+    let mut mesh_data = MeshData::new();
+
+    add_cylinder_to_mash(
+        &mut mesh_data,
+        Vec3::ZERO,
+        PIECE_RADIUS * 0.9,
+        ROOK_HEIGHT * 0.3,
+        8
+    );
+
+    add_cylinder_to_mesh(
+        &mut mesh_data,
+        Vec3::new(0.0, ROOK_HEIGHT * 0.3, 0.0),
+        PIECE_RADIUS * 0.7,
+        ROOK_HEIGHT * 0.5,
+        8
+    );
+
+    let wall_height = ROOK_HEIGHT * 0.2;
+    let wall_thickness = 0.08;
+    let wall_y = ROOK_HEIGHT * 0.8;
+
+    for i in 0..8 {
+        let angle = i as f32 * std::f32::consts::PI * 0.25;
+        let x = angle.cos() * PIECE_RADIUS * 0.8;
+        let z = angle.sin() * PIECE_RADIUS * 0.8;
+
+        if i % 2 == 0 {
+            // High part
+            add_box_to_mesh(
+                &mut mesh_data,
+                Vec3::new(x, wall_y + wall_height * 0.5, z),
+                Vec3::new(wall_thickness, wall_height, wall_thickness)
+            );
+        } else {
+            // Low part
+            add_box_to_mesh(
+                &mut mesh_data,
+                Vec3::new(z, wall_y + wall_height * 0.3, z),
+                Vec3::new(wall_thickness, wall_height * 0.6, wall_thickness)
+            );
+        }
+    }
+
+    mesh_data.to_mesh()
+}
+
 struct MeshData {
     verticles: Vec<Vec3>,
     normals: Vec<Vec3>,
