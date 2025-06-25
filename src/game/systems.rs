@@ -42,3 +42,5 @@ pub fn update_piece_positions(
         transform.translation = target_position;
     }
 }
+
+pub fn update_board_highlights() { todo!() }
