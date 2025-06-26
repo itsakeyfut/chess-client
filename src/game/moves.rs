@@ -50,4 +50,9 @@ impl Move {
         self.is_castling = true;
         self
     }
+
+    pub fn with_en_passant(mut self) -> Self {
+        self.is_en_passant = true;
+        self
+    }
 }
