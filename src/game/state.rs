@@ -110,3 +110,21 @@ pub struct SelectionState {
     pub legal_moves: Vec<BoardPosition>,
     pub highlighted_squares: Vec<Entity>,
 }
+
+impl SelectionState {
+    pub fn clear(&mut self) {
+        self.selected_piece = None;
+        self.selected_position = None;
+        self.legal_moves.clear();
+        self.highlighted_squares.clear();
+    }
+
+    pub fn select_piece(&mut self, entity: Entity, position: BoardPosition) {
+        self.selected_piece = Some(entity);
+        self.selected_position = Some(position);
+    }
+
+    pub fn is_selected(&self, entity: Entity) -> bool {
+        self.selected_piece == Some(entity)
+    }
+}
