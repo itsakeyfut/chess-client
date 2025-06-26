@@ -230,3 +230,15 @@ fn generate_bishop_moves(
 
     moves
 }
+
+fn generate_queen_moves(
+    board: &crate::game::ChessBoard,
+    pieces: &Query<&crate::game::pieces::ChessPiece>,
+    position: BoardPosition,
+    color: PieceColor,
+) -> Vec<BoardPosition> {
+    let mut moves = Vec::new();
+    moves.extend(generate_rook_moves(board, pieces, position, color));
+    moves.extend(generate_bishop_moves(board, pieces, position, color));
+    moves
+}
