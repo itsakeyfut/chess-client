@@ -100,3 +100,44 @@ impl Move {
         notation
     }
 }
+
+fn generate_pawn_moves(
+    board: &crate::game::ChessBoard,
+    pieces: &Query<&crate::game::pieces::ChessPiece>,
+    position: BoardPosition,
+    color: PieceColor,
+) -> Vec<BoardPosition> {
+    let mut moves = Vec::new();
+    let direction = if color == PieceColor::White { 1 } else { -1 };
+    let start_rank = if color == PieceColor::White { 1 } else { 6 };
+
+    // Move forward
+    if let Some(forward_pos) = position.offset(0, direction) {
+        if board.is_empty(forward_pos) {
+            moves.push(forward_pos);
+
+            if position.rank == start_rank {
+                if let Some(double_forward) = position.offset(0, direction * 2) {
+                    if board.is_empty(double_forward) {
+                        moves.push(double_forward);
+                    }
+                }
+            }
+        }
+    }
+
+    // Diagonal attack
+    for file_offset in [-1, 1] {
+        if let Some(attack_pos) = position.offset(file_offset, direction) {
+            if let Some(target_entity) = board.get_piece_at(attack_pos) {
+                if let Ok(target_piece) = pieces.get(target_entity) {
+                    if target_piece.color != color {
+                        moves.push(attack_pos);
+                    }
+                }
+            }
+        }
+    }
+
+    moves
+}
