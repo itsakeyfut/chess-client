@@ -29,6 +29,14 @@ pub fn is_valid_move(
         return Err(MoveError::WrongPlayerPiece);
     }
 
+    if let Some(target_entity) = board.get_piece_at(to) {
+        if let Ok(target_piece) = pieces.get(target_entity) {
+            if target_piece.color == current_player {
+                return Err(MoveError::OwnPieceBlocking);
+            }
+        }
+    }
+
     Ok(())
 }
 
