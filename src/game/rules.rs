@@ -11,6 +11,10 @@ pub fn is_valid_move(
         return Err(MoveError::InvalidPosition);
     }
 
+    if from == to {
+        return Err(MoveError::InvalidPosition);
+    }
+
     Ok(())
 }
 
