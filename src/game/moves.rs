@@ -101,6 +101,46 @@ impl Move {
     }
 }
 
+pub fn generate_legal_moves(
+    board: &crate::game::ChessBoard,
+    pieces: &Query<&crate::game::pieces::ChessPiece>,
+    position: BoardPosition,
+    current_player: PieceColor,
+) -> Vec<BoardPosition> {
+    let mut legal_moves = Vec::new();
+
+    if let Some(piece_entity) = board.get_piece_at(position) {
+        if let Ok(piece) = pieces.get(piece_entity) {
+            if piece.color != current_player {
+                return legal_moves;
+            }
+
+            match piece.piece_type {
+                PieceType::Pawn => {
+                    legal_moves.extend(generate_pawn_moves(board, pieces, position, piece.color));
+                }
+                PieceType::Rook => {
+                    legal_moves.extend(generate_rook_moves(board, pieces, position, piece.color));
+                }
+                PieceType::Knight => {
+                    legal_moves.extend(generate_knight_moves(board, pieces, position, piece.color));
+                }
+                PieceType::Bishop => {
+                    legal_moves.extend(generate_bishop_moves(board, pieces, position, piece.color));
+                }
+                PieceType::Queen => {
+                    legal_moves.extend(generate_queen_moves(board, pieces, position, piece.color));
+                }
+                PieceType::King => {
+                    legal_moves.extend(generate_king_moves(board, pieces, position, piece.color));
+                },
+            }
+        }
+    }
+
+    legal_moves
+}
+
 fn generate_pawn_moves(
     board: &crate::game::ChessBoard,
     pieces: &Query<&crate::game::pieces::ChessPiece>,
