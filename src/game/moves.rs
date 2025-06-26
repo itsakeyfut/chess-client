@@ -200,3 +200,33 @@ fn generate_knight_moves(
 
     moves
 }
+
+fn generate_bishop_moves(
+    board: &crate::game::ChessBoard,
+    pieces: &Query<&crate::game::pieces::ChessPiece>,
+    position: BoardPosition,
+    color: PieceColor,
+) -> Vec<BoardPosition> {
+    let mut moves = Vec::new();
+    let directions = [(1, 1), (1, -1), (-1, 1), (-1, 1)];
+
+    for (file_dir, rank_dir) in directions {
+        let mut current_pos = position;
+
+        while let Some(next_pos) = current_pos.offset(file_dir, rank_dir) {
+            if let Some(piece_entity) = board.get_piece_at(next_pos) {
+                if let Ok(piece) = pieces.get(piece_entity) {
+                    if piece.color != color {
+                        moves.push(next_pos);
+                    }
+                }
+                break; // stop because the next position is already occupied
+            } else {
+                moves.push(next_pos); // brank
+                current_pos = next_pos;
+            }
+        }
+    }
+
+    moves
+}
