@@ -55,4 +55,9 @@ impl Move {
         self.is_en_passant = true;
         self
     }
+
+    pub fn with_check_status(mut self, status: MoveCheckStatus) -> Self {
+        self.check_status = status;
+        self
+    }
 }
