@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::{BoardPosition, PieceColor};
+use crate::{BoardPosition, PieceColor, PieceType};
 
 #[derive(Resource)]
 pub struct GameStateResource {
@@ -81,4 +81,24 @@ impl CastlingRights {
             block_queenside: false,
         }
     }
+}
+
+#[derive(Resource, Default)]
+pub struct MoveHistory {
+    pub moves: Vec<ChessMove>,
+    pub positions: Vec<String>, // FEN strings
+}
+
+#[derive(Debug, Clone)]
+pub struct ChessMove {
+    pub from: BoardPosition,
+    pub to: BoardPosition,
+    pub piece_type: PieceType,
+    pub piece_color: PieceColor,
+    pub captured_piece: Option<PieceType>,
+    pub promotion: Option<PieceType>,
+    pub is_castling: bool,
+    pub is_en_passant: bool,
+    pub notation: String,
+    pub timestamp: f64,
 }
