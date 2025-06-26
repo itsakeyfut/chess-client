@@ -35,4 +35,9 @@ impl Move {
             check_status: MoveCheckStatus::None,
         }
     }
+
+    pub fn with_capture(mut self, captured_piece: PieceType) -> Self {
+        self.captured_piece = Some(captured_piece);
+        self
+    }
 }
