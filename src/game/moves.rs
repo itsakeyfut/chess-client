@@ -45,4 +45,9 @@ impl Move {
         self.promotion = Some(promotion);
         self
     }
+
+    pub fn with_castling(mut self) -> Self {
+        self.is_castling = true;
+        self
+    }
 }
