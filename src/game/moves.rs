@@ -242,3 +242,32 @@ fn generate_queen_moves(
     moves.extend(generate_bishop_moves(board, pieces, position, color));
     moves
 }
+
+fn generate_king_moves(
+    board: &crate::game::ChessBoard,
+    pieces: &Query<&crate::game::pieces::ChessPiece>,
+    position: BoardPosition,
+    color: PieceColor,
+) -> Vec<BoardPosition> {
+    let mut moves = Vec::new();
+    let king_moves = [
+        (0, 1), (0, -1), (1, 0), (-1, 0),
+        (1, 1), (1, -1), (-1, 1), (-1, -1),
+    ];
+
+    for (file_offset, rank_offset) in king_moves {
+        if let Some(target_pos) = position.offset(file_offset, rank_offset) {
+            if let Some(piece_entity) = board.get_piece_at(target_pos) {
+                if let Ok(piece) = pieces.get(piece_entity) {
+                    if piece.color != color {
+                        moves.push(target_pos);
+                    }
+                }
+            } else {
+                moves.push(target_pos); // brank
+            }
+        }
+    }
+
+    moves
+}
