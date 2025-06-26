@@ -20,3 +20,19 @@ pub enum MoveCheckStatus {
     Check,
     Checkmate,
 }
+
+impl Move {
+    pub fn new(from: BoardPosition, to: BoardPosition, piece_type: PieceType, color: PieceColor) -> Self {
+        Self {
+            from,
+            to,
+            piece_type,
+            color,
+            captured_piece: None,
+            promotion: None,
+            is_castling: false,
+            is_en_passant: false,
+            check_status: MoveCheckStatus::None,
+        }
+    }
+}
