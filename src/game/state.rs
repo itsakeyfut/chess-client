@@ -102,3 +102,11 @@ pub struct ChessMove {
     pub notation: String,
     pub timestamp: f64,
 }
+
+#[derive(Resource, Default)]
+pub struct SelectionState {
+    pub selected_piece: Option<Entity>,
+    pub selected_position: Option<BoardPosition>,
+    pub legal_moves: Vec<BoardPosition>,
+    pub highlighted_squares: Vec<Entity>,
+}
