@@ -60,4 +60,43 @@ impl Move {
         self.check_status = status;
         self
     }
+
+    pub fn to_algebraic_notation(&self) -> String {
+        let mut notation = String::new();
+
+        if self.is_castling {
+            if self.to.file > self.from.file {
+                return "O-O".to_string(); // Kingside
+            } else {
+                return "O-O-O".to_string(); // Queenside
+            }
+        }
+
+        if self.piece_type != PieceType::Pawn {
+            notation.push(self.piece_type.to_fen_char().to_ascii_uppercase());
+        }
+
+        if self.captured_piece.is_some() {
+            if self.piece_type == PieceType::Pawn {
+                notation.push((b'a' + self.from.file) as char);
+            }
+            notation.push('x');
+        }
+
+        // destination
+        notation.push_str(&self.to.to_algebraic());
+
+        if let Some(promotion) = self.promotion {
+            notation.push('=');
+            notation.push(promotion.to_fen_char().to_ascii_uppercase());
+        }
+
+        match self.check_status {
+            MoveCheckStatus::Check => notation.push('+'),
+            MoveCheckStatus::Checkmate => notation.push('#'),
+            MoveCheckStatus::None => {},
+        }
+
+        notation
+    }
 }
