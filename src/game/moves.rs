@@ -171,3 +171,32 @@ fn generate_rook_moves(
 
     moves
 }
+
+fn generate_knight_moves(
+    board: &crate::game::ChessBoard,
+    pieces: &Query<&crate::game::pieces::ChessPiece>,
+    position: BoardPosition,
+    color: PieceColor,
+) -> Vec<BoardPosition> {
+    let mut moves = Vec::new();
+    let knight_moves = [
+        (2, 1), (2, -1), (-2, 1), (-2, -1),
+        (1, 2), (1, -2), (-1, 2), (-1, -2),
+    ];
+
+    for (file_offset, rank_offset) in knight_moves {
+        if let Some(target_pos) = position.offset(file_offset, rank_offset) {
+            if let Some(piece_entity) = board.get_piece_at(target_pos) {
+                if let Ok(piece) = pieces.get(piece_entity) {
+                    if piece.color != color {
+                        moves.push(target_pos);
+                    }
+                }
+            } else {
+                moves.push(target_pos); // brank
+            }
+        }
+    }
+
+    moves
+}
