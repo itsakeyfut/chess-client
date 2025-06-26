@@ -40,4 +40,9 @@ impl Move {
         self.captured_piece = Some(captured_piece);
         self
     }
+
+    pub fn with_promotion(mut self, promotion: PieceType) -> Self {
+        self.promotion = Some(promotion);
+        self
+    }
 }
