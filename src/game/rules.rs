@@ -1,8 +1,8 @@
 use bevy::prelude::*;
-use crate::game::{
+use crate::{game::{
     pieces::{ChessPiece, PieceColor},
     BoardPosition
-};
+}, PieceType};
 
 pub fn is_valid_move(
     board: &crate::game::ChessBoard,
@@ -51,6 +51,23 @@ pub enum MoveError {
     IllegalMove,
     KingInCheck,
     PathBlocked,
+}
+
+fn is_legal_piece_move(
+    piece: &ChessPiece,
+    from: BoardPosition,
+    to: BoardPosition,
+    board: &crate::game::ChessBoard,
+    pieces: &Query<&ChessPiece>,
+) -> bool {
+    match piece.piece_type {
+        PieceType::Pawn => is_legal_pawn_move(piece, from, to, board, pieces),
+        PieceType::Rook => is_legal_rook_move(from, to, board),
+        PieceType::Knight => is_legal_knight_move(from, to),
+        PieceType::Bishop => is_legal_bishop_move(from, to, board),
+        PieceType::Queen => is_legal_queen_move(from, to, board),
+        PieceType::King => is_legal_king_move(from, to),
+    }
 }
 
 fn is_legal_pawn_move(
