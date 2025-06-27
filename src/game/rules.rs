@@ -117,6 +117,13 @@ fn is_legal_queen_move(from: BoardPosition, to: BoardPosition, board: &crate::ga
     false
 }
 
+fn is_legal_king_move(from: BoardPosition, to: BoardPosition) -> bool {
+    let file_diff = (to.file as i8 - from.file as i8).abs();
+    let rank_diff = (to.rank as i8 - from.rank as i8).abs();
+
+    file_diff <= 1 && rank_diff <= 1
+}
+
 fn is_path_clear(from: BoardPosition, to: BoardPosition, board: &crate::game::ChessBoard) -> bool {
     let positions_between = from.positions_between(&to);
 
