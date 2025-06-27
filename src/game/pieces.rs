@@ -289,8 +289,8 @@ pub fn spawn_piece(
     materials: &crate::graphics::ChessMaterials,
 ) -> Entity {
     let world_position = position.to_world_position();
-    let mesh_handle = get_piece_mesh(piece_type, meshes);
-    let material_handle = get_piece_material(color, materials);
+    let mesh_handle = meshes.get_piece_mesh(piece_type);
+    let material_handle = materials.get_piece_material(color);
 
     commands.spawn((
         PbrBundle {
