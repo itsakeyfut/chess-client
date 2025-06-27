@@ -86,3 +86,15 @@ fn is_legal_pawn_move(
 
     false
 }
+
+fn is_path_clear(from: BoardPosition, to: BoardPosition, board: &crate::game::ChessBoard) -> bool {
+    let positions_between = from.positions_between(&to);
+
+    for pos in positions_between {
+        if !board.is_empty(pos) {
+            return false;
+        }
+    }
+
+    true
+}
