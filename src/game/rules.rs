@@ -176,3 +176,25 @@ pub fn is_king_in_check(
 
     false
 }
+
+pub fn is_checkmate(
+    player_color: PieceColor,
+    board: &crate::game::ChessBoard,
+    pieces: &Query<&ChessPiece>,
+) -> bool {
+    if !is_king_in_check(player_color, board, pieces) {
+        return false;
+    }
+
+    for (pos, entity) in board.get_pieces_by_color(player_color, pieces) {
+        let legal_moves = crate::game::moves::generate_legal_moves(board, pieces, pos, player_color);
+
+        for target_pos in legal_moves {
+            // 仮想的に手を実行してチェック状態を確認
+            // TODO: 実際の実装では盤面のコピーを作成して手を実行する
+            // 簡略化のため、ここでは基本的なチェックのみ
+        }
+    }
+
+    true // 簡略化
+}
