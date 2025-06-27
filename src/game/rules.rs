@@ -95,6 +95,13 @@ fn is_legal_rook_move(from: BoardPosition, to: BoardPosition, board: &crate::gam
     is_path_clear(from, to, board)
 }
 
+fn is_legal_knight_move(from: BoardPosition, to: BoardPosition) -> bool {
+    let file_diff = (to.file as i8 - from.file as i8).abs();
+    let rank_diff = (to.rank as i8 - from.rank as i8).abs();
+
+    (file_diff == 2 && rank_diff == 1) || (file_diff == 1 && rank_diff == 2)
+}
+
 fn is_path_clear(from: BoardPosition, to: BoardPosition, board: &crate::game::ChessBoard) -> bool {
     let positions_between = from.positions_between(&to);
 
