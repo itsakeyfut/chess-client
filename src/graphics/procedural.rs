@@ -372,6 +372,31 @@ fn add_cylinder_to_mesh(mesh_data: &mut MeshData, center: Vec3, radius: f32, hei
     }
 }
 
+pub fn generate_simple_piece_mesh(piece_type: crate::game::pieces::PieceType) -> Mesh {
+    use crate::core::constants::*;
+    
+    match piece_type {
+        crate::game::pieces::PieceType::Pawn => {
+            Mesh::from(Sphere::new(PIECE_RADIUS * 0.7))
+        },
+        crate::game::pieces::PieceType::Rook => {
+            Mesh::from(Cylinder::new(PIECE_RADIUS * 0.8, ROOK_HEIGHT * 0.8))
+        },
+        crate::game::pieces::PieceType::Knight => {
+            Mesh::from(Cylinder::new(PIECE_RADIUS * 0.7, KNIGHT_HEIGHT * 0.6))
+        },
+        crate::game::pieces::PieceType::Bishop => {
+            Mesh::from(Cylinder::new(PIECE_RADIUS * 0.7, BISHOP_HEIGHT * 0.7))
+        },
+        crate::game::pieces::PieceType::Queen => {
+            Mesh::from(Cylinder::new(PIECE_RADIUS * 0.8, QUEEN_HEIGHT * 0.7))
+        },
+        crate::game::pieces::PieceType::King => {
+            Mesh::from(Cylinder::new(PIECE_RADIUS * 0.9, KING_HEIGHT * 0.8))
+        },
+    }
+}
+
 // 以下すべて実装が長くなりそうなため簡略化
 fn add_tapered_cylinder_to_mesh(
     mesh_data: &mut MeshData, 
