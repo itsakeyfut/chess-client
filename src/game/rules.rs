@@ -87,6 +87,14 @@ fn is_legal_pawn_move(
     false
 }
 
+fn is_legal_rook_move(from: BoardPosition, to: BoardPosition, board: &crate::game::ChessBoard) -> bool {
+    if !from.is_orthogonal_to(&to) {
+        return false;
+    }
+
+    is_path_clear(from, to, board)
+}
+
 fn is_path_clear(from: BoardPosition, to: BoardPosition, board: &crate::game::ChessBoard) -> bool {
     let positions_between = from.positions_between(&to);
 
