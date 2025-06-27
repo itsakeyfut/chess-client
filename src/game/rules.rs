@@ -152,3 +152,27 @@ fn is_path_clear(from: BoardPosition, to: BoardPosition, board: &crate::game::Ch
 
     true
 }
+
+pub fn is_king_in_check(
+    king_color: PieceColor,
+    board: &crate::game::ChessBoard,
+    pieces: &Query<&ChessPiece>,
+) -> bool {
+    let king_position = match board.find_king(king_color, pieces) {
+        Some(pos) => pos,
+        None => return false, // if not find king
+    };
+
+    // Check if opponent can attack your king
+    let opponent_color = king_color.opposite();
+
+    for (pos, entity) in board.get_pieces_by_color(opponent_color, pieces) {
+        if let Ok(piece) = pieces.get(entity) {
+            if is_legal_piece_move(piece, pos, king_position, board, pieces) {
+                return true;
+            }
+        }
+    }
+
+    false
+}
