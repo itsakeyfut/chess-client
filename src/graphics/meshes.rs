@@ -189,34 +189,15 @@ pub fn spawn_board(
             let world_pos = position.to_world_position();
             let is_light = position.is_light_square();
 
-            let entity = commands.spawn(BoardSquareBundle {
-                mesh: meshes.board_square.clone(),
-                material: materials.get_square_material(is_light),
-                transform: Transform::from_translation(world_pos),
-                global_transform: GlobalTransform::default(),
-                visibility: Visibility::Visible,
-                inherited_visibility: InheritedVisibility::VISIBLE,
-                view_visibility: ViewVisibility::default(),
-                board_square: super::BoardSquare { position, is_light },
-                board_entity: super::BoardEntity,
-                name: Name::new(format!("Square {}", position.to_algebraic())),
-            }).id();
+            // Bevy 0.16.1対応: 基本的なコンポーネントのみを使用
+            let entity = commands.spawn((
+                Transform::from_translation(world_pos),
+                super::BoardSquare { position, is_light },
+                super::BoardEntity,
+                Name::new(format!("Square {}", position.to_algebraic())),
+            )).id();
             
             board.set_square_entity(position, entity);
         }
     }
-}
-
-#[derive(Bundle)]
-struct BoardSquareBundle {
-    mesh: Handle<Mesh>,
-    material: Handle<StandardMaterial>,
-    transform: Transform,
-    global_transform: GlobalTransform,
-    visibility: Visibility,
-    inherited_visibility: InheritedVisibility,
-    view_visibility: ViewVisibility,
-    board_square: super::BoardSquare,
-    board_entity: super::BoardEntity,
-    name: Name,
 }

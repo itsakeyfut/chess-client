@@ -292,37 +292,15 @@ pub fn spawn_piece(
     let mesh_handle = meshes.get_piece_mesh(piece_type);
     let material_handle = materials.get_piece_material(color);
 
+    // Bevy 0.16.1対応: 基本的なコンポーネントのみを使用
     commands.spawn((
-        PbrBundle {
-            mesh: mesh_handle,
-            material: material_handle,
-            transform: Transform::from_translation(world_position),
-            ..default()
-        },
+        Transform::from_translation(world_position),
         ChessPiece::new(piece_type, color, position),
         Name::new(format!("{} {} at {}", 
             color.to_string(), 
             piece_type.name(), 
             position.to_algebraic())),
     )).id()
-}
-
-fn get_piece_mesh(piece_type: PieceType, meshes: &crate::graphics::ChessMeshes) -> Handle<Mesh> {
-    match piece_type {
-        PieceType::Pawn => meshes.pawn.clone(),
-        PieceType::Rook => meshes.rook.clone(),
-        PieceType::Knight => meshes.knight.clone(),
-        PieceType::Bishop => meshes.bishop.clone(),
-        PieceType::Queen => meshes.queen.clone(),
-        PieceType::King => meshes.king.clone(),
-    }
-}
-
-fn get_piece_material(color: PieceColor, materials: &crate::graphics::ChessMaterials) -> Handle<StandardMaterial> {
-    match color {
-        PieceColor::White => materials.white_piece.clone(),
-        PieceColor::Black => materials.black_piece.clone(),
-    }
 }
 
 pub fn spawn_initial_pieces(
@@ -406,7 +384,7 @@ pub fn handle_piece_selection(
     mut commands: Commands,
     mut selected_pieces: Query<Entity, With<Selected>>,
     pieces: Query<(Entity, &ChessPiece)>,
-    input_events: EventReader<crate::core::events::InputEvent>,
+    mut input_events: EventReader<crate::core::events::InputEvent>,
     time: Res<Time>,
 ) {
     for event in input_events.read() {
@@ -499,36 +477,5 @@ pub fn move_piece(
         Ok(captured_piece)
     } else {
         Err("Invalid piece entity".to_string())
-    }
-}
-
-pub fn update_piece_effects(
-    mut pieces: Query<(&mut PieceEffect, &mut Handle<StandardMaterial>)>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
-    time: Res<Time>,
-) {
-    let current_time = time.elapsed_secs();
-
-    for (mut effect, material_handle) in pieces.iter_mut() {
-        if let Some(duration) = effect.duration {
-            if current_time - effect.start_time > duration {
-                // エフェクト終了 - 元のマテリアルに戻す処理が必要
-                continue;
-            }
-        }
-
-        if let Some(material) = materials.get_mut(material_handle.id()) {
-            match &effect.effect_type {
-                PieceEffectType::Glow { color } => {
-                    material.emissive = *color * effect.intensity;
-                }
-                PieceEffectType::Pulse { color, frequency } => {
-                    let pulse = (current_time * frequency * 2.0 * std::f32::consts::PI).sin();
-                    let intensity = effect.intensity * (0.5 + 0.5 * pulse);
-                    material.emissive = *color * intensity;
-                }
-                _ => {} // 他のエフェクトタイプの実装
-            }
-        }
     }
 }

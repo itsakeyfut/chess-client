@@ -52,7 +52,8 @@ impl ChessClientApp {
             .init_resource::<UIState>()
             .init_resource::<CameraController>()
             .init_resource::<NetworkState>()
-            .init_resource::<AudioSettings>();
+            .init_resource::<AudioSettings>()
+            .init_resource::<PerformanceStats>();
 
         // イベント
         app.add_event::<PieceSelectedEvent>()
@@ -62,7 +63,13 @@ impl ChessClientApp {
             .add_event::<UIStateChangeEvent>()
             .add_event::<CameraControlEvent>()
             .add_event::<GameActionEvent>()
-            .add_event::<AudioEvent>();
+            .add_event::<AudioEvent>()
+            .add_event::<crate::core::events::InputEvent>() // 追加
+            .add_event::<crate::core::events::AnimationEvent>() // 追加
+            .add_event::<crate::core::events::PerformanceEvent>() // 追加
+            .add_event::<crate::core::events::DebugEvent>() // 追加
+            .add_event::<crate::core::events::NetworkEvent>() // 追加
+            .add_event::<crate::core::events::SettingsChangedEvent>(); // 追加
 
         // カスタムプラグイン
         app.add_plugins((
@@ -137,14 +144,10 @@ fn setup_app(
             *clear_color = ClearColor(Color::srgb(0.1, 0.1, 0.15));
         },
     }
-
-    // パフォーマンス統計用のリソースを初期化
-    commands.insert_resource(PerformanceStats::default());
 }
 
 fn setup_debug_info(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
 ) {
     #[cfg(debug_assertions)]
     {
@@ -153,7 +156,6 @@ fn setup_debug_info(
             Text::new("Chess 3D - Debug Mode\n"),
             TextColor(Color::WHITE),
             TextFont {
-                font: asset_server.load("fonts/FiraSans-Bold.ttf"),
                 font_size: 20.0,
                 ..default()
             },
@@ -188,7 +190,7 @@ fn handle_window_events(
     #[cfg(target_os = "macos")]
     if keyboard_input.just_pressed(KeyCode::KeyQ) && keyboard_input.pressed(KeyCode::SuperLeft) {
         info!("Cmd+Q pressed, exiting application");
-        app_exit_events.send(bevy::app::AppExit::Success);
+        app_exit_events.write(bevy::app::AppExit::Success);
     }
 }
 
@@ -241,6 +243,7 @@ fn update_performance_stats(
 #[derive(Component)]
 struct DebugInfoText;
 
+// メモリ使用量を取得する関数（sysinfoクレート使用）
 #[cfg(feature = "memory_stats")]
 fn get_memory_usage() -> f32 {
     use sysinfo::{System, SystemExt, ProcessExt};
