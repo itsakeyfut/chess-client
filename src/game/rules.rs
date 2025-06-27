@@ -198,3 +198,23 @@ pub fn is_checkmate(
 
     true // 簡略化
 }
+
+pub fn is_stalemate(
+    player_color: PieceColor,
+    board: &crate::game::ChessBoard,
+    pieces: &Query<&ChessPiece>,
+) -> bool {
+    if is_king_in_check(player_color, board, pieces) {
+        return false; // if check, it's not stalemate
+    }
+
+    // Check legal move
+    for (pos, _) in board.get_pieces_by_color(player_color, pieces) {
+        let legal_moves = crate::game::moves::generate_legal_moves(board, pieces, pos, player_color);
+        if !legal_moves.is_empty() {
+            return false; // it's not stalemate because of legal move
+        }
+    }
+
+    true
+}
