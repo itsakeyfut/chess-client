@@ -110,6 +110,13 @@ fn is_legal_bishop_move(from: BoardPosition, to: BoardPosition, board: &crate::g
     is_path_clear(from, to, board)
 }
 
+fn is_legal_queen_move(from: BoardPosition, to: BoardPosition, board: &crate::game::ChessBoard) -> bool {
+    if from.is_orthogonal_to(&to) || from.is_diagonal_to(&to) {
+        return is_path_clear(from, to, board);
+    }
+    false
+}
+
 fn is_path_clear(from: BoardPosition, to: BoardPosition, board: &crate::game::ChessBoard) -> bool {
     let positions_between = from.positions_between(&to);
 
