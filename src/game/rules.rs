@@ -102,6 +102,14 @@ fn is_legal_knight_move(from: BoardPosition, to: BoardPosition) -> bool {
     (file_diff == 2 && rank_diff == 1) || (file_diff == 1 && rank_diff == 2)
 }
 
+fn is_legal_bishop_move(from: BoardPosition, to: BoardPosition, board: &crate::game::ChessBoard) -> bool {
+    if !from.is_diagonal_to(&to) {
+        return false;
+    }
+
+    is_path_clear(from, to, board)
+}
+
 fn is_path_clear(from: BoardPosition, to: BoardPosition, board: &crate::game::ChessBoard) -> bool {
     let positions_between = from.positions_between(&to);
 
