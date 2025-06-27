@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use bevy::window::WindowTheme;
+use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 
 use crate::{
     audio::AudioPlugin,
@@ -24,7 +25,7 @@ impl ChessClientApp {
         let mut app = App::new();
 
         // Bevy の基本プラグイン
-        app.add_plugins(
+        app.add_plugins((
             DefaultPlugins
                 .set(WindowPlugin {
                     primary_window: Some(Window {
@@ -37,16 +38,16 @@ impl ChessClientApp {
                     }),
                     ..default()
                 })
-                .set(ImagePlugin::default_nearest())
-                .build()
-        );
+                .set(ImagePlugin::default_nearest()),
+            FrameTimeDiagnosticsPlugin::default(),
+            LogDiagnosticsPlugin::default(),
+        ));
 
         // ゲーム状態
-        app.add_state::<GameState>();
+        app.init_state::<GameState>();
 
         // グローバルリソース
-        app.insert_resource(Msaa::Sample4)
-            .insert_resource(ClearColor(Color::rgb(0.08, 0.08, 0.12)))
+        app.insert_resource(ClearColor(Color::srgb(0.08, 0.08, 0.12)))
             .init_resource::<GameSettings>()
             .init_resource::<UIState>()
             .init_resource::<CameraController>()
@@ -102,8 +103,8 @@ impl ChessClientApp {
         app
     }
 
-    pub fn run(self) -> ! {
-        self.new().run();
+    pub fn run(self) {
+        ChessClientApp::new().run();
     }
 }
 
@@ -126,14 +127,14 @@ fn setup_app(
     
     // 背景色を設定に基づいて調整
     match settings.graphics_quality {
-        crate::core::resources::GraphicsQuality::Low => {
-            *clear_color = ClearColor(Color::rgb(0.05, 0.05, 0.08));
+        GraphicsQuality::Low => {
+            *clear_color = ClearColor(Color::srgb(0.05, 0.05, 0.08));
         },
-        crate::core::resources::GraphicsQuality::Medium => {
-            *clear_color = ClearColor(Color::rgb(0.08, 0.08, 0.12));
+        GraphicsQuality::Medium => {
+            *clear_color = ClearColor(Color::srgb(0.08, 0.08, 0.12));
         },
-        crate::core::resources::GraphicsQuality::High => {
-            *clear_color = ClearColor(Color::rgb(0.1, 0.1, 0.15));
+        GraphicsQuality::High | GraphicsQuality::Ultra => {
+            *clear_color = ClearColor(Color::srgb(0.1, 0.1, 0.15));
         },
     }
 
@@ -143,32 +144,25 @@ fn setup_app(
 
 fn setup_debug_info(
     mut commands: Commands,
+    asset_server: Res<AssetServer>,
 ) {
     #[cfg(debug_assertions)]
     {
         // デバッグビルドでのみデバッグ情報を表示
         commands.spawn((
-            TextBundle::from_sections([
-                TextSection::new(
-                    "Chess 3D - Debug Mode\n",
-                    TextStyle {
-                        font_size: 20.0,
-                        color: Color::WHITE,
-                        ..default()
-                    },
-                ),
-                TextSection::from_style(TextStyle {
-                    font_size: 16.0,
-                    color: Color::YELLOW,
-                    ..default()
-                }),
-            ])
-            .with_style(Style {
+            Text::new("Chess 3D - Debug Mode\n"),
+            TextColor(Color::WHITE),
+            TextFont {
+                font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                font_size: 20.0,
+                ..default()
+            },
+            Node {
                 position_type: PositionType::Absolute,
                 top: Val::Px(10.0),
                 left: Val::Px(10.0),
                 ..default()
-            }),
+            },
             DebugInfoText,
         ));
     }
@@ -177,24 +171,24 @@ fn setup_debug_info(
 fn handle_window_events(
     mut exit_events: EventReader<bevy::window::WindowCloseRequested>,
     mut app_exit_events: EventWriter<bevy::app::AppExit>,
-    keyboard_input: Res<Input<KeyCode>>,
+    keyboard_input: Res<ButtonInput<KeyCode>>,
 ) {
     // ウィンドウが閉じられた時の処理
     for _ in exit_events.read() {
         info!("Window close requested");
-        app_exit_events.send(bevy::app::AppExit);
+        app_exit_events.write(bevy::app::AppExit::Success);
     }
 
     // Alt+F4 や Cmd+Q でアプリケーション終了
     if keyboard_input.just_pressed(KeyCode::F4) && keyboard_input.pressed(KeyCode::AltLeft) {
         info!("Alt+F4 pressed, exiting application");
-        app_exit_events.send(bevy::app::AppExit);
+        app_exit_events.write(bevy::app::AppExit::Success);
     }
 
     #[cfg(target_os = "macos")]
-    if keyboard_input.just_pressed(KeyCode::Q) && keyboard_input.pressed(KeyCode::SuperLeft) {
+    if keyboard_input.just_pressed(KeyCode::KeyQ) && keyboard_input.pressed(KeyCode::SuperLeft) {
         info!("Cmd+Q pressed, exiting application");
-        app_exit_events.send(bevy::app::AppExit);
+        app_exit_events.send(bevy::app::AppExit::Success);
     }
 }
 
@@ -205,26 +199,37 @@ fn update_performance_stats(
     mut debug_text: Query<&mut Text, With<DebugInfoText>>,
 ) {
     stats.frame_count += 1;
-    stats.total_time += time.delta_seconds();
+    stats.total_time += time.delta_secs();
 
     // 1秒ごとに統計を更新
     if stats.total_time >= 1.0 {
         stats.fps = stats.frame_count as f32 / stats.total_time;
-        stats.frame_count = 0;
-        stats.total_time = 0.0;
-
-        // メモリ使用量を取得（可能な場合）
-        if let Some(memory_diagnostic) = diagnostics.get(bevy::diagnostic::SystemInformationDiagnosticsPlugin::SYSTEM_MEMORY) {
-            if let Some(memory_value) = memory_diagnostic.smoothed() {
-                stats.memory_usage_mb = memory_value / 1024.0 / 1024.0;
+        
+        // より正確なFPS計算（フレーム時間診断から）
+        if let Some(frame_time_diagnostic) = diagnostics.get(&bevy::diagnostic::FrameTimeDiagnosticsPlugin::FRAME_TIME) {
+            if let Some(frame_time_value) = frame_time_diagnostic.smoothed() {
+                stats.fps = 1.0 / (frame_time_value as f32);
             }
         }
 
+        // メモリ使用量を取得（sysinfoクレートを使用）
+        #[cfg(feature = "memory_stats")]
+        {
+            stats.memory_usage_mb = get_memory_usage();
+        }
+        #[cfg(not(feature = "memory_stats"))]
+        {
+            stats.memory_usage_mb = 0.0;
+        }
+
+        stats.frame_count = 0;
+        stats.total_time = 0.0;
+
         // デバッグテキストを更新
         #[cfg(debug_assertions)]
-        if let Ok(mut text) = debug_text.get_single_mut() {
-            text.sections[1].value = format!(
-                "FPS: {:.1}\nMemory: {:.1} MB\nFrame Time: {:.2} ms",
+        if let Ok(mut text) = debug_text.single_mut() {
+            **text = format!(
+                "Chess 3D - Debug Mode\nFPS: {:.1}\nMemory: {:.1} MB\nFrame Time: {:.2} ms",
                 stats.fps,
                 stats.memory_usage_mb,
                 1000.0 / stats.fps.max(1.0)
@@ -235,3 +240,19 @@ fn update_performance_stats(
 
 #[derive(Component)]
 struct DebugInfoText;
+
+#[cfg(feature = "memory_stats")]
+fn get_memory_usage() -> f32 {
+    use sysinfo::{System, SystemExt, ProcessExt};
+    use std::process;
+    
+    let mut system = System::new_all();
+    system.refresh_all();
+    
+    let pid = process::id();
+    if let Some(process) = system.process(sysinfo::Pid::from(pid as usize)) {
+        process.memory() as f32 / 1024.0 / 1024.0 // MB単位
+    } else {
+        0.0
+    }
+}
