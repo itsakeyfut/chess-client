@@ -420,7 +420,7 @@ pub fn handle_piece_selection(
             for (entity, piece) in pieces.iter() {
                 if piece.position == *pos {
                     commands.entity(entity).insert(Selected {
-                        selected_at: time.elapsed_seconds(),
+                        selected_at: time.elapsed_secs(),
                     });
                     break;
                 }
@@ -434,7 +434,7 @@ pub fn animate_pieces(
     mut pieces: Query<(Entity, &mut Transform, &PieceAnimation)>,
     time: Res<Time>,
 ) {
-    let current_time = time.elapsed_seconds();
+    let current_time = time.elapsed_secs();
 
     for (entity, mut transform, animation) in pieces.iter_mut() {
         if animation.is_complete(current_time) {
@@ -476,7 +476,7 @@ pub fn move_piece(
 
         // アニメーションを開始
         commands.entity(moving_piece_entity).insert(
-            PieceAnimation::new_move(start_pos, target_pos, time.elapsed_seconds())
+            PieceAnimation::new_move(start_pos, target_pos, time.elapsed_secs())
         );
 
         // 駒の論理的な位置を更新
@@ -491,7 +491,7 @@ pub fn move_piece(
         if let Some(captured_entity) = captured_piece {
             if let Ok((_, _, transform)) = pieces.get(captured_entity) {
                 commands.entity(captured_entity).insert(
-                    PieceAnimation::new_capture(transform.translation, time.elapsed_seconds())
+                    PieceAnimation::new_capture(transform.translation, time.elapsed_secs())
                 );
             }
         }
@@ -507,7 +507,7 @@ pub fn update_piece_effects(
     mut materials: ResMut<Assets<StandardMaterial>>,
     time: Res<Time>,
 ) {
-    let current_time = time.elapsed_seconds();
+    let current_time = time.elapsed_secs();
 
     for (mut effect, material_handle) in pieces.iter_mut() {
         if let Some(duration) = effect.duration {
